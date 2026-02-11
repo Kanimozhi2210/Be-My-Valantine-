@@ -3,45 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>Hugging with Love ❤️</title>
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* BODY */
 body{
   height:100vh;
-  background:#fff;
+  background:#ffffff;
+  overflow:hidden;
+  position:relative;
+}
+
+/* CENTER CONTENT */
+.container{
+  position:relative;
+  z-index:10;
+  height:100vh;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-}
-
-/* content */
-.container{
   text-align:center;
-  z-index:2;
 }
 
-/* dudu bubu gif */
+/* DUDU BUBU GIF */
 .container img{
-  width:230px;
+  width:220px;
   margin-bottom:15px;
 }
 
-/* text */
+/* TEXT */
 .text{
   font-size:22px;
-  margin-bottom:20px;
   color:#000;
+  margin-bottom:20px;
 }
 
-/* button */
+/* BUTTON */
 .btn{
   padding:12px 32px;
   font-size:15px;
@@ -57,12 +62,13 @@ body{
   transform:scale(1.1);
 }
 
-/* hearts */
+/* HEARTS */
 .heart{
-  position:absolute;
+  position:fixed;
   font-size:20px;
   color:red;
   opacity:0.8;
+  pointer-events:none;
 }
 
 .up{
@@ -102,24 +108,26 @@ body{
 <body>
 
 <div class="container">
-  <img src="hug.gif" alt="Dudu Bubu Hug">
+  <!-- 🔴 IMPORTANT: GIF NAME = dudu.gif -->
+  <img src="dudu.gif" alt="Dudu Bubu Hugging">
   <div class="text">Hugging with love ❤️</div>
   <button class="btn" onclick="nextPage()">Next 💗</button>
 </div>
 
 <script>
-/* floating hearts both directions */
+/* FULL SCREEN FLOATING HEARTS */
 setInterval(()=>{
   const heart = document.createElement("div");
   heart.className = "heart " + (Math.random() > 0.5 ? "up" : "down");
   heart.innerHTML = "❤️";
-  heart.style.left = Math.random()*100 + "vw";
+  heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (16 + Math.random()*20) + "px";
   document.body.appendChild(heart);
 
   setTimeout(()=>heart.remove(),7000);
-},350);
+},300);
 
+/* NEXT PAGE */
 function nextPage(){
   window.location.href = "page2.html";
 }
@@ -127,3 +135,4 @@ function nextPage(){
 
 </body>
 </html>
+
