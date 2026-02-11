@@ -10,13 +10,12 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family:'Poppins', sans-serif;
 }
 
-/* BODY */
 body{
   height:100vh;
-  background:#ffffff;
+  background:#fff;
   overflow:hidden;
   position:relative;
 }
@@ -24,7 +23,7 @@ body{
 /* CENTER CONTENT */
 .container{
   position:relative;
-  z-index:10;
+  z-index:5;
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -33,7 +32,7 @@ body{
   text-align:center;
 }
 
-/* DUDU BUBU GIF */
+/* GIF */
 .container img{
   width:220px;
   margin-bottom:15px;
@@ -55,50 +54,46 @@ body{
   background:#ff2e63;
   color:white;
   cursor:pointer;
-  transition:0.3s;
-}
-
-.btn:hover{
-  transform:scale(1.1);
 }
 
 /* HEARTS */
 .heart{
   position:fixed;
-  font-size:20px;
-  color:red;
-  opacity:0.8;
+  z-index:1;              /* 🔥 IMPORTANT */
+  font-size:24px;
+  color:#ff2e63;          /* strong red */
+  opacity:1;              /* full visible */
   pointer-events:none;
 }
 
 .up{
-  animation: floatUp 6s linear infinite;
+  animation: floatUp 6s linear forwards;
 }
 
 .down{
-  animation: floatDown 6s linear infinite;
+  animation: floatDown 6s linear forwards;
 }
 
 @keyframes floatUp{
-  0%{
-    transform: translateY(100vh) scale(0.6);
+  from{
+    transform: translateY(110vh) scale(0.6);
     opacity:0;
   }
-  50%{ opacity:1; }
-  100%{
+  50%{opacity:1;}
+  to{
     transform: translateY(-10vh) scale(1);
     opacity:0;
   }
 }
 
 @keyframes floatDown{
-  0%{
+  from{
     transform: translateY(-10vh) scale(0.6);
     opacity:0;
   }
-  50%{ opacity:1; }
-  100%{
-    transform: translateY(100vh) scale(1);
+  50%{opacity:1;}
+  to{
+    transform: translateY(110vh) scale(1);
     opacity:0;
   }
 }
@@ -108,31 +103,26 @@ body{
 <body>
 
 <div class="container">
-  <!-- 🔴 IMPORTANT: GIF NAME = dudu.gif -->
-  <img src="dudu.gif" alt="Dudu Bubu Hugging">
+  <img src="dudu.gif" alt="Dudu Bubu Hug">
   <div class="text">Hugging with love ❤️</div>
-  <button class="btn" onclick="nextPage()">Next 💗</button>
+  <button class="btn">Next 💗</button>
 </div>
 
 <script>
-/* FULL SCREEN FLOATING HEARTS */
+/* ❤️ HEART FLOATING – FIXED */
 setInterval(()=>{
   const heart = document.createElement("div");
-  heart.className = "heart " + (Math.random() > 0.5 ? "up" : "down");
+  heart.classList.add("heart");
+  heart.classList.add(Math.random() > 0.5 ? "up" : "down");
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (16 + Math.random()*20) + "px";
+  heart.style.fontSize = (18 + Math.random()*20) + "px";
+
   document.body.appendChild(heart);
 
-  setTimeout(()=>heart.remove(),7000);
-},300);
-
-/* NEXT PAGE */
-function nextPage(){
-  window.location.href = "page2.html";
-}
+  setTimeout(()=>heart.remove(),6000);
+},200);
 </script>
 
 </body>
 </html>
-
