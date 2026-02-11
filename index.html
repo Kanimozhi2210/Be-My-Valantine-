@@ -21,44 +21,38 @@ body{
   position:relative;
 }
 
-/* ❤️ HEART DOT BACKGROUND */
+/* dotted heart background */
 .bg-dots{
   position:fixed;
   inset:0;
   background-image:radial-gradient(#ff4d6d 1px, transparent 1px);
-  background-size:42px 42px;
+  background-size:40px 40px;
   opacity:0.25;
   z-index:0;
 }
 
-/* ❤️ FLOATING HEARTS */
+/* floating hearts */
 .heart{
   position:fixed;
   z-index:2;
   font-size:18px;
   color:#ff4d6d;
-  pointer-events:auto;
-  animation: float 8s linear forwards;
+  opacity:0.9;
+  animation: float 7s linear forwards;
   transition:transform 0.2s;
 }
 
-.heart:hover{
+.heart:active{
   transform:scale(2.5);
 }
 
 @keyframes float{
-  from{
-    transform:translateY(110vh) scale(0.6);
-    opacity:0;
-  }
+  from{transform:translateY(110vh) scale(0.6);opacity:0;}
   50%{opacity:1;}
-  to{
-    transform:translateY(-10vh) scale(1);
-    opacity:0;
-  }
+  to{transform:translateY(-10vh) scale(1);opacity:0;}
 }
 
-/* CENTER CONTENT */
+/* center */
 .container{
   position:relative;
   z-index:5;
@@ -69,59 +63,56 @@ body{
   justify-content:center;
   text-align:center;
   color:#ffd6e0;
+  padding:20px;
 }
 
-/* GIF CARD */
+/* gif card */
 .gif-box{
   background:#000;
-  padding:10px;
-  border-radius:14px;
-  box-shadow:0 0 25px rgba(255,77,109,0.4);
+  padding:12px;
+  border-radius:16px;
+  box-shadow:0 0 30px rgba(255,77,109,0.6);
   margin-bottom:25px;
 }
 
 .gif-box img{
-  width:200px;
-  display:block;
+  width:180px;
 }
 
-/* QUESTION */
+/* text */
 .question{
   font-family:'Great Vibes', cursive;
-  font-size:34px;
+  font-size:30px;
   line-height:1.4;
-  max-width:340px;
   text-shadow:0 0 14px rgba(255,77,109,0.9);
-  margin-bottom:35px;
+  margin-bottom:30px;
 }
 
-/* YES BUTTON */
+/* buttons */
+.btn-wrap{
+  display:flex;
+  gap:16px;
+  position:relative;
+}
+
 .yes{
-  padding:12px 36px;
+  padding:12px 32px;
   border:none;
   border-radius:30px;
   background:#ff4d6d;
   color:white;
   font-size:15px;
-  cursor:pointer;
-  box-shadow:0 0 22px rgba(255,77,109,0.8);
-  z-index:6;
+  box-shadow:0 0 20px rgba(255,77,109,0.8);
 }
 
-/* ❌ NO BUTTON (VISIBLE ALWAYS) */
 .no{
-  position:fixed;
-  top:62%;
-  left:55%;
   padding:12px 30px;
   border:none;
   border-radius:30px;
   background:#1f1f1f;
   color:white;
   font-size:14px;
-  cursor:pointer;
-  z-index:10; /* 🔥 VERY IMPORTANT */
-  box-shadow:0 0 18px rgba(255,77,109,0.4);
+  position:relative;
 }
 </style>
 </head>
@@ -133,7 +124,7 @@ body{
 <div class="container">
 
   <div class="gif-box">
-    <img src="dudu.gif" alt="Dudu Bubu Hug">
+    <img src="dudu.gif" alt="Dudu Bubu">
   </div>
 
   <div class="question">
@@ -142,44 +133,44 @@ body{
     will you be that someone? 💗
   </div>
 
-  <button class="yes" onclick="goNext()">Yes 💖</button>
+  <div class="btn-wrap">
+    <button class="yes" onclick="goNext()">Yes 💖</button>
+    <button class="no" id="noBtn">No 🥺</button>
+  </div>
+
 </div>
 
-<!-- ❌ NO BUTTON -->
-<button class="no" id="noBtn"> No 🥺</button>
-
 <script>
-/* ❤️ FLOATING HEARTS */
+/* floating hearts */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML="❤";
   h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(14+Math.random()*16)+"px";
+  h.style.fontSize=(14+Math.random()*14)+"px";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),8000);
-},300);
+  setTimeout(()=>h.remove(),7000);
+},400);
 
-/* ❌ NO BUTTON ESCAPE */
+/* no button escape (mobile friendly) */
 const noBtn=document.getElementById("noBtn");
 const words=[
-  "Please no 😭",
   "Why love 🥺",
+  "Please no 😭",
   "Don’t break my heart 💔",
   "Try again 💗",
-  "You can’t escape 😌"
+  "You can’t 😌"
 ];
 
 function moveNo(){
-  noBtn.style.left=Math.random()*(window.innerWidth-150)+"px";
-  noBtn.style.top=Math.random()*(window.innerHeight-80)+"px";
   noBtn.innerText=words[Math.floor(Math.random()*words.length)];
+  noBtn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
 }
 
-noBtn.addEventListener("mouseenter",moveNo);
 noBtn.addEventListener("touchstart",moveNo);
+noBtn.addEventListener("mouseenter",moveNo);
 
-/* YES → NEXT PAGE */
+/* yes next page */
 function goNext(){
   window.location.href="page2.html";
 }
@@ -187,5 +178,3 @@ function goNext(){
 
 </body>
 </html>
-
-
