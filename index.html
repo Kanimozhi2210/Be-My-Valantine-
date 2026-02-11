@@ -93,7 +93,6 @@ button{
   box-shadow:0 0 18px rgba(255,0,80,.8);
 }
 
-/* NO button */
 #no{
   background:#1c1c1c;
   color:white;
@@ -165,33 +164,15 @@ function moveNo(){
   no.style.top=Math.random()*(window.innerHeight-80)+"px";
 }
 
-/* Laptop */
 no.addEventListener("mouseenter",moveNo);
-/* Mobile */
 no.addEventListener("touchstart",e=>{
   e.preventDefault();
   moveNo();
 });
 
-/* YES → NEXT PAGE */
+/* YES → PAGE 2 */
 document.getElementById("yes").onclick=()=>{
-  document.body.innerHTML=`
-    <div style="
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:black;
-      font-family:'Great Vibes',cursive;
-      font-size:44px;
-      color:#ff7aa2;
-      text-shadow:0 0 20px pink;
-      text-align:center;
-    ">
-      I know you said YES 💖<br>
-      Forever starts now ✨
-    </div>
-  `;
+  window.location.href="page2.html";
 };
 </script>
 
