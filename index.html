@@ -15,20 +15,47 @@ body{
   overflow:hidden;
   font-family:'Poppins', sans-serif;
   background:
-    radial-gradient(circle at center, #3b0a18 0%, #0a0205 70%),
-    radial-gradient(circle at top left, #ff4d6d44, transparent 60%),
-    radial-gradient(circle at bottom right, #ff4d6d44, transparent 60%);
+    radial-gradient(circle at center, #2b060f 0%, #050102 70%),
+    radial-gradient(circle at top left, #ff4d6d55, transparent 60%),
+    radial-gradient(circle at bottom right, #ff4d6d55, transparent 60%);
   position:relative;
 }
 
-/* 💗 HEART DOT BACKGROUND */
-.bg-hearts{
+/* ❤️ HEART DOT BACKGROUND */
+.bg-dots{
   position:fixed;
   inset:0;
-  background-image:radial-gradient(#ff4d6d 1.1px, transparent 1.1px);
-  background-size:40px 40px;
+  background-image:radial-gradient(#ff4d6d 1px, transparent 1px);
+  background-size:42px 42px;
   opacity:0.25;
   z-index:0;
+}
+
+/* ❤️ FLOATING HEARTS */
+.heart{
+  position:fixed;
+  z-index:2;
+  font-size:18px;
+  color:#ff4d6d;
+  pointer-events:auto;
+  animation: float 8s linear forwards;
+  transition:transform 0.2s;
+}
+
+.heart:hover{
+  transform:scale(2.5);
+}
+
+@keyframes float{
+  from{
+    transform:translateY(110vh) scale(0.6);
+    opacity:0;
+  }
+  50%{opacity:1;}
+  to{
+    transform:translateY(-10vh) scale(1);
+    opacity:0;
+  }
 }
 
 /* CENTER CONTENT */
@@ -44,23 +71,28 @@ body{
   color:#ffd6e0;
 }
 
-/* GIF */
-.container img{
-  width:200px;
-  margin-bottom:18px;
-  background:black;
-  padding:8px;
-  border-radius:12px;
+/* GIF CARD */
+.gif-box{
+  background:#000;
+  padding:10px;
+  border-radius:14px;
+  box-shadow:0 0 25px rgba(255,77,109,0.4);
+  margin-bottom:25px;
 }
 
-/* QUESTION TEXT */
+.gif-box img{
+  width:200px;
+  display:block;
+}
+
+/* QUESTION */
 .question{
   font-family:'Great Vibes', cursive;
   font-size:34px;
-  max-width:340px;
   line-height:1.4;
+  max-width:340px;
   text-shadow:0 0 14px rgba(255,77,109,0.9);
-  margin-bottom:40px;
+  margin-bottom:35px;
 }
 
 /* YES BUTTON */
@@ -76,10 +108,10 @@ body{
   z-index:6;
 }
 
-/* ❌ NO BUTTON (ALWAYS VISIBLE & FLOATING) */
+/* ❌ NO BUTTON (VISIBLE ALWAYS) */
 .no{
   position:fixed;
-  top:60%;
+  top:62%;
   left:55%;
   padding:12px 30px;
   border:none;
@@ -88,60 +120,36 @@ body{
   color:white;
   font-size:14px;
   cursor:pointer;
-  z-index:7;          /* 🔥 IMPORTANT */
-  box-shadow:0 0 15px rgba(255,77,109,0.4);
-}
-
-/* ❤️ FLOATING HEARTS */
-.heart{
-  position:fixed;
-  z-index:2;
-  font-size:18px;
-  color:#ff4d6d;
-  opacity:0.9;
-  pointer-events:auto;
-  animation: float 8s linear forwards;
-  transition:transform 0.2s;
-}
-
-.heart:hover{
-  transform:scale(2.8);
-}
-
-@keyframes float{
-  from{
-    transform:translateY(110vh) scale(0.6);
-    opacity:0;
-  }
-  50%{opacity:1;}
-  to{
-    transform:translateY(-10vh) scale(1);
-    opacity:0;
-  }
+  z-index:10; /* 🔥 VERY IMPORTANT */
+  box-shadow:0 0 18px rgba(255,77,109,0.4);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-hearts"></div>
+<div class="bg-dots"></div>
 
 <div class="container">
-  <img src="dudu.gif" alt="Dudu Bubu Hug">
+
+  <div class="gif-box">
+    <img src="dudu.gif" alt="Dudu Bubu Hug">
+  </div>
 
   <div class="question">
-    Love is finding someone who makes life better,<br>
+    Love is finding someone who<br>
+    makes life better,<br>
     will you be that someone? 💗
   </div>
 
   <button class="yes" onclick="goNext()">Yes 💖</button>
 </div>
 
-<!-- NO BUTTON -->
-<button class="no" id="noBtn">Why love 🥺</button>
+<!-- ❌ NO BUTTON -->
+<button class="no" id="noBtn"> No 🥺</button>
 
 <script>
-/* ❤️ FLOATING HEARTS BACKGROUND */
+/* ❤️ FLOATING HEARTS */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -156,17 +164,15 @@ setInterval(()=>{
 const noBtn=document.getElementById("noBtn");
 const words=[
   "Please no 😭",
-  "Don’t break my heart 💔",
   "Why love 🥺",
+  "Don’t break my heart 💔",
   "Try again 💗",
-  "You can’t 😌"
+  "You can’t escape 😌"
 ];
 
 function moveNo(){
-  const x=Math.random()*(window.innerWidth-140);
-  const y=Math.random()*(window.innerHeight-80);
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
+  noBtn.style.left=Math.random()*(window.innerWidth-150)+"px";
+  noBtn.style.top=Math.random()*(window.innerHeight-80)+"px";
   noBtn.innerText=words[Math.floor(Math.random()*words.length)];
 }
 
@@ -181,3 +187,5 @@ function goNext(){
 
 </body>
 </html>
+
+
