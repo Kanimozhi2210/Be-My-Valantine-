@@ -1,115 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Valentine Love</title>
-    <style>
-        html, body {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: cursive;
-            background: linear-gradient(45deg, #ff6b9d, #c44569);
-        }
-        .bg_heart {
-            position: relative;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-        }
-        .container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        #text1 {
-            font-size: 1.5em;
-            line-height: 1.6;
-            max-width: 80%;
-            background: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-radius: 15px;
-        }
-        .heart {
-            position: absolute;
-            top: -50%;
-            transform: rotate(-45deg);
-            animation: love linear infinite;
-        }
-        .heart:before, .heart:after {
-            position: absolute;
-            top: -50%;
-            left: 0;
-            display: block;
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: 100px 100px 0 0;
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-        }
-        .heart:after {
-            left: 50%;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
-        @keyframes love {
-            0% { top: 110%; }
-            100% { top: -10%; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: white;
+    }
+
+    .container {
+        text-align: center;
+        max-width: 90%;
+    }
+
+    .text {
+        font-size: 22px;
+        line-height: 1.6;
+        opacity: 0;
+        animation: fadeIn 2s forwards;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 22px;
+        background: white;
+        margin-left: 5px;
+        animation: blink 1s infinite;
+        vertical-align: bottom;
+    }
+
+    .hint {
+        margin-top: 40px;
+        font-size: 13px;
+        opacity: 0;
+        animation: fadeIn 2s forwards;
+        animation-delay: 6s;
+        color: #aaa;
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+
+    @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0; }
+    }
+</style>
 </head>
+
 <body>
-    <div class="bg_heart"></div>
-    <div class="container">
-        <h1>All I Dream of is Your Love 💕</h1>
-        <div id="text1"></div>
-    </div>
-    <script>
-        var loveInterval = setInterval(function() {
-            var r_num = Math.floor(Math.random() * 40) + 1;
-            var r_size = Math.floor(Math.random() * 65) + 10;
-            var r_left = Math.floor(Math.random() * 100) + 1;
-            var r_bg = Math.floor(Math.random() * 155) + 100;
-            var r_time = Math.floor(Math.random() * 5) + 5;
-            document.querySelector('.bg_heart').innerHTML += 
-                `<div class='heart' style='width:${r_size}px;height:${r_size}px;left:${r_left}%;background:rgba(255,${r_bg-25},${r_bg},0.8);animation-duration:${r_time}s'></div>` +
-                `<div class='heart' style='width:${r_size-10}px;height:${r_size-10}px;left:${r_left + r_num}%;background:rgba(255,${r_bg-25},${r_bg + 25},0.8);animation-duration:${r_time + 5}s'></div>`;
-        }, 300);
 
-        var i = 0;
-        var txt1 = "All I dream of is your love. All I long for is your touch. And darling, something tells me it's enough. 💕 You can say that I'm a fool, and I don't know very much, but I think they call this love... Will you be my Valentine?";
-        var speed = 80;
-        typeWriter();
+<div class="container">
+    <div class="text" id="text"></div><span class="cursor"></span>
+    <div class="hint">scroll slowly</div>
+</div>
 
-        function typeWriter() {
-            if (i < txt1.length) {
-                document.getElementById("text1").innerHTML += txt1.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
+<script>
+    const message = [
+        "Hey…",
+        "I made this just for you.",
+        "Because you matter to me.",
+    ];
+
+    let line = 0;
+    let char = 0;
+    const speed = 80;
+    const textDiv = document.getElementById("text");
+
+    function typeEffect() {
+        if (line < message.length) {
+            if (char < message[line].length) {
+                textDiv.innerHTML += message[line].charAt(char);
+                char++;
+                setTimeout(typeEffect, speed);
+            } else {
+                textDiv.innerHTML += "<br><br>";
+                char = 0;
+                line++;
+                setTimeout(typeEffect, 700);
             }
         }
-    </script>
+    }
+
+    setTimeout(typeEffect, 1000);
+</script>
+
 </body>
 </html>
