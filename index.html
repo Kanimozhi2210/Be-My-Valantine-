@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hugging with Love ❤️</title>
+<title>Valentine 💗</title>
 
 <style>
 *{
@@ -15,66 +15,103 @@
 
 body{
   height:100vh;
-  background:#fff;
   overflow:hidden;
+  background:
+    radial-gradient(circle at top, #4a0d1f, #1a0208 70%);
   position:relative;
 }
 
-/* CENTER CONTENT */
+/* HEART PATTERN BACKGROUND */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(#ff4d6d 1.2px, transparent 1.2px);
+  background-size:40px 40px;
+  opacity:0.25;
+  z-index:0;
+}
+
+/* CENTER */
 .container{
   position:relative;
-  z-index:5;
+  z-index:2;
   height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
+  color:#ffd6e0;
+  padding:20px;
 }
 
 /* GIF */
 .container img{
   width:220px;
-  margin-bottom:15px;
-}
-
-/* TEXT */
-.text{
-  font-size:22px;
-  color:#000;
   margin-bottom:20px;
 }
 
-/* BUTTON */
+/* TEXT */
+.question{
+  font-size:22px;
+  max-width:320px;
+  margin-bottom:30px;
+}
+
+/* BUTTONS */
+.buttons{
+  display:flex;
+  gap:20px;
+  position:relative;
+}
+
 .btn{
-  padding:12px 32px;
-  font-size:15px;
+  padding:12px 28px;
   border:none;
   border-radius:30px;
-  background:#ff2e63;
-  color:white;
+  font-size:15px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-/* HEARTS */
+.yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+.no{
+  background:#555;
+  color:white;
+  position:absolute;
+  left:120px;
+}
+
+/* RESULT TEXT */
+.result{
+  font-size:26px;
+  color:#ffb3c6;
+  display:none;
+}
+
+/* FLOATING HEARTS */
 .heart{
   position:fixed;
-  z-index:1;              /* 🔥 IMPORTANT */
-  font-size:24px;
-  color:#ff2e63;          /* strong red */
-  opacity:1;              /* full visible */
-  pointer-events:none;
+  font-size:18px;
+  color:#ff4d6d;
+  opacity:0.7;
+  animation: float 8s linear forwards;
+  pointer-events:auto;
+  transition:transform 0.2s;
+  z-index:1;
 }
 
-.up{
-  animation: floatUp 6s linear forwards;
+.heart:hover{
+  transform:scale(2);
 }
 
-.down{
-  animation: floatDown 6s linear forwards;
-}
-
-@keyframes floatUp{
+@keyframes float{
   from{
     transform: translateY(110vh) scale(0.6);
     opacity:0;
@@ -85,43 +122,65 @@ body{
     opacity:0;
   }
 }
-
-@keyframes floatDown{
-  from{
-    transform: translateY(-10vh) scale(0.6);
-    opacity:0;
-  }
-  50%{opacity:1;}
-  to{
-    transform: translateY(110vh) scale(1);
-    opacity:0;
-  }
-}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="container" id="container">
   <img src="dudu.gif" alt="Dudu Bubu Hug">
-  <div class="text">Hugging with love ❤️</div>
-  <button class="btn">Next 💗</button>
+
+  <div class="question" id="question">
+    Love is finding someone who makes life better,<br>
+    will you be that someone? 💗
+  </div>
+
+  <div class="buttons" id="buttons">
+    <button class="btn yes" onclick="yesClick()">Yes 💖</button>
+    <button class="btn no" id="noBtn">No</button>
+  </div>
+
+  <div class="result" id="result">I know you said yes 💖</div>
 </div>
 
 <script>
-/* ❤️ HEART FLOATING – FIXED */
+/* FLOATING HEARTS */
 setInterval(()=>{
   const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.classList.add(Math.random() > 0.5 ? "up" : "down");
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (18 + Math.random()*20) + "px";
-
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (14 + Math.random()*14) + "px";
   document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),8000);
+},400);
 
-  setTimeout(()=>heart.remove(),6000);
-},200);
+/* NO BUTTON ESCAPE */
+const noBtn = document.getElementById("noBtn");
+const words = [
+  "Don't touch 😤",
+  "Why 😭",
+  "Nope 🙅‍♂️",
+  "Haha no 😜",
+  "Try again 😏"
+];
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+function moveNo(){
+  const x = Math.random()*200 - 100;
+  const y = Math.random()*200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.innerText = words[Math.floor(Math.random()*words.length)];
+}
+
+/* YES CLICK */
+function yesClick(){
+  document.getElementById("question").style.display="none";
+  document.getElementById("buttons").style.display="none";
+  document.getElementById("result").style.display="block";
+}
 </script>
 
 </body>
