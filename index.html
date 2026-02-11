@@ -23,10 +23,9 @@ body{
     radial-gradient(circle at center, #2b060f 0%, #050102 70%),
     radial-gradient(circle at top left, #ff4d6d55, transparent 60%),
     radial-gradient(circle at bottom right, #ff4d6d55, transparent 60%);
-  position:relative;
 }
 
-/* ❤️ DOT HEART BG */
+/* ❤️ DOT BACKGROUND */
 .bg-dots{
   position:fixed;
   inset:0;
@@ -36,7 +35,7 @@ body{
   z-index:0;
 }
 
-/* ❤️ FLOATING HEARTS (CSS ONLY – MOBILE SAFE) */
+/* ❤️ FLOATING HEARTS (PERFECT MOBILE) */
 .hearts{
   position:fixed;
   inset:0;
@@ -45,21 +44,26 @@ body{
 }
 .hearts span{
   position:absolute;
+  bottom:-10%;
   color:#ff4d6d;
   font-size:14px;
-  animation: floatUp 8s linear infinite;
+  animation: floatUp linear infinite;
   opacity:0;
 }
-.hearts span:nth-child(odd){ animation-duration:10s; }
-.hearts span:nth-child(even){ animation-duration:7s; }
+.hearts span:nth-child(1){left:10%;animation-duration:10s;}
+.hearts span:nth-child(2){left:25%;animation-duration:8s;}
+.hearts span:nth-child(3){left:40%;animation-duration:11s;}
+.hearts span:nth-child(4){left:55%;animation-duration:9s;}
+.hearts span:nth-child(5){left:70%;animation-duration:12s;}
+.hearts span:nth-child(6){left:85%;animation-duration:10s;}
 
 @keyframes floatUp{
-  0%{ transform:translateY(100vh); opacity:0; }
-  20%{ opacity:1; }
-  100%{ transform:translateY(-10vh); opacity:0; }
+  0%{transform:translateY(0);opacity:0;}
+  15%{opacity:1;}
+  100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* 🌸 CENTER */
+/* 🌸 CONTENT */
 .container{
   position:relative;
   z-index:5;
@@ -81,7 +85,7 @@ body{
   box-shadow:0 0 25px rgba(255,77,109,.6);
   margin-bottom:25px;
 }
-.gif-box img{ width:170px; }
+.gif-box img{width:170px;}
 
 /* 💌 TEXT */
 .question{
@@ -89,22 +93,22 @@ body{
   font-size:28px;
   line-height:1.4;
   text-shadow:0 0 14px rgba(255,77,109,.9);
-  margin-bottom:28px;
+  margin-bottom:30px;
 }
 
-/* 🔘 BUTTON AREA */
+/* 🔘 BUTTONS */
 .buttons{
   position:relative;
-  width:240px;
+  width:260px;
   height:60px;
 }
 
-.yes, .no{
+button{
   position:absolute;
   top:0;
   border:none;
   border-radius:30px;
-  padding:12px 28px;
+  padding:12px 30px;
   font-size:15px;
 }
 
@@ -128,12 +132,8 @@ body{
 <div class="bg-dots"></div>
 
 <div class="hearts">
-  <span style="left:10%">❤</span>
-  <span style="left:25%">❤</span>
-  <span style="left:40%">❤</span>
-  <span style="left:55%">❤</span>
-  <span style="left:70%">❤</span>
-  <span style="left:85%">❤</span>
+  <span>❤</span><span>❤</span><span>❤</span>
+  <span>❤</span><span>❤</span><span>❤</span>
 </div>
 
 <div class="container">
@@ -156,26 +156,25 @@ body{
 </div>
 
 <script>
-/* ❌ NO BUTTON ESCAPE – CONTAINER ONLY */
-const noBtn=document.getElementById("noBtn");
-const words=[
-  "Why love 🥺",
-  "Please no 😭",
+/* ❌ NO BUTTON – FULL SCREEN ESCAPE */
+const noBtn = document.getElementById("noBtn");
+const texts=[
   "Try again 💗",
+  "Please no 😭",
   "Don’t break my heart 💔",
+  "Why love 🥺",
   "You can’t 😌"
 ];
 
-noBtn.addEventListener("touchstart",()=>{
-  noBtn.innerText=words[Math.floor(Math.random()*words.length)];
-  noBtn.style.right="auto";
-  noBtn.style.left=Math.random()*120+"px";
-});
-noBtn.addEventListener("mouseenter",()=>{
-  noBtn.innerText=words[Math.floor(Math.random()*words.length)];
-  noBtn.style.right="auto";
-  noBtn.style.left=Math.random()*120+"px";
-});
+function moveNo(){
+  noBtn.innerText=texts[Math.floor(Math.random()*texts.length)];
+  noBtn.style.position="fixed";
+  noBtn.style.left=Math.random()*70+10+"vw";
+  noBtn.style.top =Math.random()*60+20+"vh";
+}
+
+noBtn.addEventListener("touchstart",moveNo);
+noBtn.addEventListener("mouseenter",moveNo);
 
 function goNext(){
   window.location.href="page2.html";
