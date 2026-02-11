@@ -21,12 +21,12 @@ body{
   position:relative;
 }
 
-/* dotted heart background */
-.bg-dots{
+/* background dots */
+.bg{
   position:fixed;
   inset:0;
   background-image:radial-gradient(#ff4d6d 1px, transparent 1px);
-  background-size:40px 40px;
+  background-size:38px 38px;
   opacity:0.25;
   z-index:0;
 }
@@ -35,21 +35,17 @@ body{
 .heart{
   position:fixed;
   z-index:2;
-  font-size:18px;
   color:#ff4d6d;
-  opacity:0.9;
+  font-size:18px;
   animation: float 7s linear forwards;
-  transition:transform 0.2s;
+  transition:transform .2s;
 }
-
-.heart:active{
-  transform:scale(2.5);
-}
+.heart:active{ transform:scale(2.5); }
 
 @keyframes float{
-  from{transform:translateY(110vh) scale(0.6);opacity:0;}
+  from{transform:translateY(110vh);opacity:0;}
   50%{opacity:1;}
-  to{transform:translateY(-10vh) scale(1);opacity:0;}
+  to{transform:translateY(-10vh);opacity:0;}
 }
 
 /* center */
@@ -62,39 +58,37 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  color:#ffd6e0;
   padding:20px;
+  color:#ffd6e0;
 }
 
-/* gif card */
+/* gif */
 .gif-box{
-  background:#000;
+  background:black;
   padding:12px;
   border-radius:16px;
-  box-shadow:0 0 30px rgba(255,77,109,0.6);
+  box-shadow:0 0 30px rgba(255,77,109,.6);
   margin-bottom:25px;
 }
-
-.gif-box img{
-  width:180px;
-}
+.gif-box img{ width:180px; }
 
 /* text */
 .question{
   font-family:'Great Vibes', cursive;
   font-size:30px;
   line-height:1.4;
-  text-shadow:0 0 14px rgba(255,77,109,0.9);
+  text-shadow:0 0 14px rgba(255,77,109,.9);
   margin-bottom:30px;
 }
 
-/* buttons */
-.btn-wrap{
+/* buttons wrapper */
+.btns{
+  position:relative;
   display:flex;
   gap:16px;
-  position:relative;
 }
 
+/* yes */
 .yes{
   padding:12px 32px;
   border:none;
@@ -102,9 +96,10 @@ body{
   background:#ff4d6d;
   color:white;
   font-size:15px;
-  box-shadow:0 0 20px rgba(255,77,109,0.8);
+  box-shadow:0 0 20px rgba(255,77,109,.8);
 }
 
+/* no */
 .no{
   padding:12px 30px;
   border:none;
@@ -112,14 +107,15 @@ body{
   background:#1f1f1f;
   color:white;
   font-size:14px;
-  position:relative;
+  position:absolute;
+  right:-90px; /* start near YES */
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-dots"></div>
+<div class="bg"></div>
 
 <div class="container">
 
@@ -133,7 +129,7 @@ body{
     will you be that someone? 💗
   </div>
 
-  <div class="btn-wrap">
+  <div class="btns">
     <button class="yes" onclick="goNext()">Yes 💖</button>
     <button class="no" id="noBtn">No 🥺</button>
   </div>
@@ -152,25 +148,25 @@ setInterval(()=>{
   setTimeout(()=>h.remove(),7000);
 },400);
 
-/* no button escape (mobile friendly) */
+/* no button escape */
 const noBtn=document.getElementById("noBtn");
 const words=[
   "Why love 🥺",
   "Please no 😭",
-  "Don’t break my heart 💔",
   "Try again 💗",
+  "Don’t break my heart 💔",
   "You can’t 😌"
 ];
 
 function moveNo(){
   noBtn.innerText=words[Math.floor(Math.random()*words.length)];
-  noBtn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+  noBtn.style.top=(Math.random()*60-30)+"px";
+  noBtn.style.left=(Math.random()*120-60)+"px";
 }
 
 noBtn.addEventListener("touchstart",moveNo);
 noBtn.addEventListener("mouseenter",moveNo);
 
-/* yes next page */
 function goNext(){
   window.location.href="page2.html";
 }
