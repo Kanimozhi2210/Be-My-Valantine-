@@ -13,28 +13,28 @@
 body{
   height:100vh;
   overflow:hidden;
-  background:
-    radial-gradient(circle at center, #3a0615 0%, #0b0205 65%),
-    radial-gradient(circle at top left, #ff4d6d55, transparent 60%),
-    radial-gradient(circle at bottom right, #ff4d6d55, transparent 60%);
-  position:relative;
   font-family:'Poppins', sans-serif;
+  background:
+    radial-gradient(circle at center, #3b0a18 0%, #0a0205 70%),
+    radial-gradient(circle at top left, #ff4d6d44, transparent 60%),
+    radial-gradient(circle at bottom right, #ff4d6d44, transparent 60%);
+  position:relative;
 }
 
-/* background hearts */
+/* 💗 HEART DOT BACKGROUND */
 .bg-hearts{
   position:fixed;
   inset:0;
-  background-image: radial-gradient(#ff4d6d 1.2px, transparent 1.2px);
-  background-size:38px 38px;
-  opacity:0.3;
+  background-image:radial-gradient(#ff4d6d 1.1px, transparent 1.1px);
+  background-size:40px 40px;
+  opacity:0.25;
   z-index:0;
 }
 
-/* center */
+/* CENTER CONTENT */
 .container{
   position:relative;
-  z-index:3;
+  z-index:5;
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -44,48 +44,55 @@ body{
   color:#ffd6e0;
 }
 
-/* gif */
+/* GIF */
 .container img{
   width:200px;
-  margin-bottom:20px;
+  margin-bottom:18px;
+  background:black;
+  padding:8px;
+  border-radius:12px;
 }
 
-/* text */
+/* QUESTION TEXT */
 .question{
   font-family:'Great Vibes', cursive;
   font-size:34px;
   max-width:340px;
   line-height:1.4;
-  text-shadow:0 0 12px rgba(255,77,109,0.8);
+  text-shadow:0 0 14px rgba(255,77,109,0.9);
   margin-bottom:40px;
 }
 
-/* yes */
+/* YES BUTTON */
 .yes{
-  padding:12px 34px;
+  padding:12px 36px;
   border:none;
   border-radius:30px;
   background:#ff4d6d;
   color:white;
   font-size:15px;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(255,77,109,0.7);
+  box-shadow:0 0 22px rgba(255,77,109,0.8);
+  z-index:6;
 }
 
-/* no floating */
+/* ❌ NO BUTTON (ALWAYS VISIBLE & FLOATING) */
 .no{
   position:fixed;
+  top:60%;
+  left:55%;
   padding:12px 30px;
   border:none;
   border-radius:30px;
-  background:#2e2e2e;
+  background:#1f1f1f;
   color:white;
   font-size:14px;
   cursor:pointer;
-  z-index:4;
+  z-index:7;          /* 🔥 IMPORTANT */
+  box-shadow:0 0 15px rgba(255,77,109,0.4);
 }
 
-/* floating hearts */
+/* ❤️ FLOATING HEARTS */
 .heart{
   position:fixed;
   z-index:2;
@@ -97,12 +104,20 @@ body{
   transition:transform 0.2s;
 }
 
-.heart:hover{transform:scale(2.5);}
+.heart:hover{
+  transform:scale(2.8);
+}
 
 @keyframes float{
-  from{transform:translateY(110vh) scale(0.6);opacity:0;}
+  from{
+    transform:translateY(110vh) scale(0.6);
+    opacity:0;
+  }
   50%{opacity:1;}
-  to{transform:translateY(-10vh) scale(1);opacity:0;}
+  to{
+    transform:translateY(-10vh) scale(1);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -119,7 +134,6 @@ body{
     will you be that someone? 💗
   </div>
 
-  <!-- YES GOES TO NEXT PAGE -->
   <button class="yes" onclick="goNext()">Yes 💖</button>
 </div>
 
@@ -127,33 +141,35 @@ body{
 <button class="no" id="noBtn">Why love 🥺</button>
 
 <script>
-/* floating hearts */
+/* ❤️ FLOATING HEARTS BACKGROUND */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML="❤";
   h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(14+Math.random()*14)+"px";
+  h.style.fontSize=(14+Math.random()*16)+"px";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },300);
 
-/* no escape */
+/* ❌ NO BUTTON ESCAPE */
 const noBtn=document.getElementById("noBtn");
 const words=[
+  "Please no 😭",
   "Don’t break my heart 💔",
   "Why love 🥺",
-  "Please no 😭",
   "Try again 💗",
-  "You can’t escape love 😌"
+  "You can’t 😌"
 ];
 
 function moveNo(){
-  noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
-  noBtn.style.top=Math.random()*(window.innerHeight-60)+"px";
+  const x=Math.random()*(window.innerWidth-140);
+  const y=Math.random()*(window.innerHeight-80);
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
   noBtn.innerText=words[Math.floor(Math.random()*words.length)];
 }
-moveNo();
+
 noBtn.addEventListener("mouseenter",moveNo);
 noBtn.addEventListener("touchstart",moveNo);
 
