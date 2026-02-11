@@ -3,182 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine 💗</title>
+<title>Be Mine 💗</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<!-- Romantic Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:'Poppins', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-/* 🌑 BACKGROUND */
 body{
+  min-height:100vh;
   background:
-    radial-gradient(circle at center, #2b060f 0%, #050102 70%),
-    radial-gradient(circle at top left, #ff4d6d55, transparent 60%),
-    radial-gradient(circle at bottom right, #ff4d6d55, transparent 60%);
+    radial-gradient(circle at center, rgba(255,0,80,.25), transparent 60%),
+    repeating-linear-gradient(
+      45deg,
+      #0b0006,
+      #0b0006 10px,
+      #120008 10px,
+      #120008 20px
+    );
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Great Vibes', cursive;
+  color:#ffd6e5;
 }
 
-/* ❤️ DOT BACKGROUND */
-.bg-dots{
-  position:fixed;
-  inset:0;
-  background-image:radial-gradient(#ff4d6d 1px, transparent 1px);
-  background-size:36px 36px;
-  opacity:0.25;
-  z-index:0;
-}
-
-/* ❤️ FLOATING HEARTS (PERFECT MOBILE) */
-.hearts{
-  position:fixed;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-}
-.hearts span{
+/* Floating hearts */
+.heart{
   position:absolute;
-  bottom:-10%;
   color:#ff4d6d;
   font-size:14px;
   animation: floatUp linear infinite;
-  opacity:0;
+  opacity:.8;
 }
-.hearts span:nth-child(1){left:10%;animation-duration:10s;}
-.hearts span:nth-child(2){left:25%;animation-duration:8s;}
-.hearts span:nth-child(3){left:40%;animation-duration:11s;}
-.hearts span:nth-child(4){left:55%;animation-duration:9s;}
-.hearts span:nth-child(5){left:70%;animation-duration:12s;}
-.hearts span:nth-child(6){left:85%;animation-duration:10s;}
-
 @keyframes floatUp{
-  0%{transform:translateY(0);opacity:0;}
-  15%{opacity:1;}
-  100%{transform:translateY(-120vh);opacity:0;}
+  from{ transform:translateY(100vh) scale(1); }
+  to{ transform:translateY(-10vh) scale(1.4); }
 }
 
-/* 🌸 CONTENT */
-.container{
-  position:relative;
-  z-index:5;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+/* Main card */
+.card{
   text-align:center;
   padding:20px;
-  color:#ffd6e0;
+  z-index:10;
 }
 
-/* 🧸 GIF */
 .gif-box{
-  background:black;
-  padding:12px;
-  border-radius:16px;
-  box-shadow:0 0 25px rgba(255,77,109,.6);
-  margin-bottom:25px;
+  width:200px;
+  height:200px;
+  background:#000;
+  border-radius:20px;
+  box-shadow:0 0 35px rgba(255,77,109,.8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:auto;
 }
-.gif-box img{width:170px;}
 
-/* 💌 TEXT */
-.question{
-  font-family:'Great Vibes', cursive;
+.gif-box img{
+  max-width:100%;
+}
+
+/* Text */
+.text{
+  margin-top:20px;
   font-size:28px;
+  text-shadow:0 0 10px rgba(255,120,170,.8);
   line-height:1.4;
-  text-shadow:0 0 14px rgba(255,77,109,.9);
-  margin-bottom:30px;
 }
 
-/* 🔘 BUTTONS */
+/* Buttons */
 .buttons{
+  margin-top:30px;
+  display:flex;
+  gap:16px;
+  justify-content:center;
   position:relative;
-  width:260px;
-  height:60px;
 }
 
-button{
-  position:absolute;
-  top:0;
-  border:none;
-  border-radius:30px;
-  padding:12px 30px;
-  font-size:15px;
-}
-
-.yes{
-  left:0;
+#yes{
   background:#ff4d6d;
+  border:none;
   color:white;
-  box-shadow:0 0 18px rgba(255,77,109,.8);
+  padding:14px 30px;
+  border-radius:999px;
+  font-size:18px;
+  box-shadow:0 0 18px rgba(255,77,109,.9);
 }
 
-.no{
-  right:0;
-  background:#1f1f1f;
+#no{
+  background:#1c1c1c;
+  border:none;
   color:white;
+  padding:14px 26px;
+  border-radius:999px;
+  font-size:16px;
+  position:relative;
+  box-shadow:0 0 10px rgba(255,255,255,.2);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-dots"></div>
-
-<div class="hearts">
-  <span>❤</span><span>❤</span><span>❤</span>
-  <span>❤</span><span>❤</span><span>❤</span>
-</div>
-
-<div class="container">
-
+<div class="card">
   <div class="gif-box">
-    <img src="dudu.gif" alt="Dudu Bubu Hug">
+    <!-- 👉 Rename your GIF as dudu.gif -->
+    <img src="dudu.gif" alt="hug">
   </div>
 
-  <div class="question">
-   You are the love of my life,<br>
-  will you be mine forever? 💗
+  <div class="text">
+    You are the love of my life,<br>
+    will you be mine forever? 💗
   </div>
 
   <div class="buttons">
-    <button class="yes" onclick="goNext()">Yes ✨</button>
-    <button class="no" id="noBtn">No 🥺</button>
+    <button id="yes">Yes ✨</button>
+    <button id="no">No 🥺</button>
   </div>
-
 </div>
 
 <script>
-/* ❌ NO BUTTON – FULL SCREEN ESCAPE */
-const noBtn = document.getElementById("noBtn");
-const texts=[
-  "Try again 💗",
-  "Please no 😭",
-  "Don’t break my heart 💔",
-  "Why love 🥺",
-  "You can’t 😌"
-];
+/* Floating hearts generator */
+for(let i=0;i<30;i++){
+  let h=document.createElement("div");
+  h.innerHTML="❤";
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.fontSize=(10+Math.random()*16)+"px";
+  document.body.appendChild(h);
+}
+
+/* Heart hover grow */
+document.addEventListener("touchstart", e=>{
+  if(e.target.classList.contains("heart")){
+    e.target.style.transform="scale(2)";
+  }
+});
+
+/* No button escape (mobile + laptop) */
+const no=document.getElementById("no");
 
 function moveNo(){
-  noBtn.innerText=texts[Math.floor(Math.random()*texts.length)];
-  noBtn.style.position="fixed";
-  noBtn.style.left=Math.random()*70+10+"vw";
-  noBtn.style.top =Math.random()*60+20+"vh";
+  const x=Math.random()*140-70;
+  const y=Math.random()*140-70;
+  no.style.transform=`translate(${x}px,${y}px)`;
 }
 
-noBtn.addEventListener("touchstart",moveNo);
-noBtn.addEventListener("mouseenter",moveNo);
+no.addEventListener("mouseenter", moveNo);
+no.addEventListener("touchstart", moveNo);
 
-function goNext(){
-  window.location.href="page2.html";
-}
+/* Yes → next page */
+document.getElementById("yes").onclick=()=>{
+  window.location.href="yes.html"; // next page
+};
 </script>
 
 </body>
 </html>
+
