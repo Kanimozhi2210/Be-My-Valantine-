@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be Mine 💗</title>
 
-<!-- Romantic Google Font -->
+<!-- Romantic Font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -13,25 +13,24 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family:sans-serif;
 }
 
 body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at center, rgba(255,0,80,.25), transparent 60%),
-    repeating-linear-gradient(
-      45deg,
-      #0b0006,
-      #0b0006 10px,
-      #120008 10px,
-      #120008 20px
-    );
+  height:100vh;
   overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:'Great Vibes', cursive;
-  color:#ffd6e5;
+  background:
+    radial-gradient(circle at center, #5b0015, #000),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,0,80,.08) 0,
+      rgba(255,0,80,.08) 1px,
+      transparent 1px,
+      transparent 12px
+    );
 }
 
 /* Floating hearts */
@@ -39,83 +38,102 @@ body{
   position:absolute;
   color:#ff4d6d;
   font-size:14px;
-  animation: floatUp linear infinite;
+  animation:float 10s linear infinite;
   opacity:.8;
 }
-@keyframes floatUp{
-  from{ transform:translateY(100vh) scale(1); }
-  to{ transform:translateY(-10vh) scale(1.4); }
+
+@keyframes float{
+  0%{transform:translateY(110vh) scale(.7);}
+  100%{transform:translateY(-10vh) scale(1.4);}
 }
 
-/* Main card */
+/* Card */
 .card{
+  position:relative;
+  z-index:5;
   text-align:center;
-  padding:20px;
-  z-index:10;
+  padding:40px 20px;
 }
 
+/* GIF box */
 .gif-box{
-  width:200px;
-  height:200px;
-  background:#000;
-  border-radius:20px;
-  box-shadow:0 0 35px rgba(255,77,109,.8);
+  width:180px;
+  height:180px;
+  background:black;
+  border-radius:18px;
+  box-shadow:0 0 30px rgba(255,0,90,.7);
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   margin:auto;
 }
 
 .gif-box img{
-  max-width:100%;
+  width:140px;
 }
 
 /* Text */
 .text{
-  margin-top:20px;
+  margin-top:25px;
+  font-family:'Great Vibes', cursive;
+  color:#ffd6e0;
   font-size:28px;
-  text-shadow:0 0 10px rgba(255,120,170,.8);
-  line-height:1.4;
+  text-shadow:0 0 12px rgba(255,100,150,.8);
 }
 
 /* Buttons */
 .buttons{
   margin-top:30px;
-  display:flex;
-  gap:16px;
-  justify-content:center;
   position:relative;
+  height:80px;
+}
+
+button{
+  border:none;
+  padding:14px 30px;
+  border-radius:999px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
 #yes{
   background:#ff4d6d;
-  border:none;
   color:white;
-  padding:14px 30px;
-  border-radius:999px;
-  font-size:18px;
-  box-shadow:0 0 18px rgba(255,77,109,.9);
+  box-shadow:0 0 18px rgba(255,0,80,.8);
 }
 
 #no{
+  position:absolute;
+  right:0;
   background:#1c1c1c;
-  border:none;
   color:white;
-  padding:14px 26px;
-  border-radius:999px;
-  font-size:16px;
-  position:relative;
-  box-shadow:0 0 10px rgba(255,255,255,.2);
+  box-shadow:0 0 12px rgba(255,255,255,.25);
+  white-space:nowrap;
 }
 </style>
 </head>
 
 <body>
 
+<!-- Floating hearts generator -->
+<script>
+for(let i=0;i<25;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.fontSize=(10+Math.random()*14)+"px";
+  document.body.appendChild(h);
+}
+</script>
+
 <div class="card">
+
+  <!-- CHANGE GIF NAME HERE -->
   <div class="gif-box">
-    <!-- 👉 Rename your GIF as dudu.gif -->
-    <img src="dudu.gif" alt="hug">
+    <img src="dudu.gif" alt="love">
   </div>
 
   <div class="text">
@@ -127,45 +145,59 @@ body{
     <button id="yes">Yes ✨</button>
     <button id="no">No 🥺</button>
   </div>
+
 </div>
 
 <script>
-/* Floating hearts generator */
-for(let i=0;i<30;i++){
-  let h=document.createElement("div");
-  h.innerHTML="❤";
-  h.className="heart";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(6+Math.random()*6)+"s";
-  h.style.fontSize=(10+Math.random()*16)+"px";
-  document.body.appendChild(h);
-}
+const no = document.getElementById("no");
 
-/* Heart hover grow */
-document.addEventListener("touchstart", e=>{
-  if(e.target.classList.contains("heart")){
-    e.target.style.transform="scale(2)";
-  }
-});
+const texts = [
+  "Don’t touch 😭",
+  "Why 🥺",
+  "Please no 💔",
+  "Hey 😳",
+  "Stop it 😭"
+];
 
-/* No button escape (mobile + laptop) */
-const no=document.getElementById("no");
+let index = 0;
 
 function moveNo(){
-  const x=Math.random()*140-70;
-  const y=Math.random()*140-70;
-  no.style.transform=`translate(${x}px,${y}px)`;
+  no.textContent = texts[index];
+  index = (index + 1) % texts.length;
+
+  const x = Math.random()*140 - 70;
+  const y = Math.random()*80 - 40;
+  no.style.transform = `translate(${x}px, ${y}px)`;
 }
 
+/* Laptop */
 no.addEventListener("mouseenter", moveNo);
-no.addEventListener("touchstart", moveNo);
 
-/* Yes → next page */
-document.getElementById("yes").onclick=()=>{
-  window.location.href="yes.html"; // next page
+/* Mobile */
+no.addEventListener("touchstart", (e)=>{
+  e.preventDefault();
+  moveNo();
+});
+
+/* YES click */
+document.getElementById("yes").onclick = ()=>{
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:black;
+      color:#ff7aa2;
+      font-family:'Great Vibes',cursive;
+      font-size:42px;
+      text-shadow:0 0 20px pink;
+    ">
+      I knew you’d say YES 💖
+    </div>
+  `;
 };
 </script>
 
 </body>
 </html>
-
