@@ -6,101 +6,135 @@
 <title>For You</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-    body {
-        height: 100vh;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        color: white;
-    }
+body{
+    height:100vh;
+    background:
+      linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+      url("bg.jpg");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    color:white;
+}
 
-    .container {
-        text-align: center;
-        max-width: 90%;
-    }
+.container{
+    text-align:center;
+    z-index:2;
+    max-width:90%;
+}
 
-    .text {
-        font-size: 22px;
-        line-height: 1.6;
-        opacity: 0;
-        animation: fadeIn 2s forwards;
-    }
+.text{
+    font-size:22px;
+    line-height:1.6;
+    min-height:90px;
+    margin-bottom:30px;
+}
 
-    .cursor {
-        display: inline-block;
-        width: 2px;
-        height: 22px;
-        background: white;
-        margin-left: 5px;
-        animation: blink 1s infinite;
-        vertical-align: bottom;
-    }
+/* button */
+.btn{
+    padding:12px 28px;
+    font-size:15px;
+    border:none;
+    border-radius:30px;
+    background:#ff6f91;
+    color:white;
+    cursor:pointer;
+    opacity:0;
+    animation: fadeIn 2s forwards;
+    animation-delay:5s;
+}
 
-    .hint {
-        margin-top: 40px;
-        font-size: 13px;
-        opacity: 0;
-        animation: fadeIn 2s forwards;
-        animation-delay: 6s;
-        color: #aaa;
-    }
+.btn:hover{
+    transform: scale(1.05);
+}
 
-    @keyframes fadeIn {
-        to { opacity: 1; }
-    }
+/* floating hearts */
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation: float 6s linear infinite;
+    opacity:0.8;
+}
 
-    @keyframes blink {
-        0%, 50%, 100% { opacity: 1; }
-        25%, 75% { opacity: 0; }
+@keyframes float{
+    0%{
+        transform: translateY(100vh) scale(0.5);
+        opacity:0;
     }
+    50%{ opacity:1; }
+    100%{
+        transform: translateY(-10vh) scale(1);
+        opacity:0;
+    }
+}
+
+@keyframes fadeIn{
+    to{ opacity:1; }
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <div class="text" id="text"></div><span class="cursor"></span>
-    <div class="hint">scroll slowly</div>
+    <div class="text" id="text"></div>
+    <button class="btn" onclick="nextPage()">Next 💗</button>
 </div>
 
 <script>
-    const message = [
-        "Hey…",
-        "I made this just for you.",
-        "Because you matter to me.",
-    ];
+const lines = [
+  "Hey…",
+  "I made this just for you 🤍",
+  "Because you mean everything to me."
+];
 
-    let line = 0;
-    let char = 0;
-    const speed = 80;
-    const textDiv = document.getElementById("text");
+let i = 0, j = 0;
+const speed = 80;
+const textDiv = document.getElementById("text");
 
-    function typeEffect() {
-        if (line < message.length) {
-            if (char < message[line].length) {
-                textDiv.innerHTML += message[line].charAt(char);
-                char++;
-                setTimeout(typeEffect, speed);
-            } else {
-                textDiv.innerHTML += "<br><br>";
-                char = 0;
-                line++;
-                setTimeout(typeEffect, 700);
-            }
-        }
+function typeLine(){
+  if(i < lines.length){
+    if(j < lines[i].length){
+      textDiv.innerHTML += lines[i].charAt(j);
+      j++;
+      setTimeout(typeLine, speed);
+    } else {
+      textDiv.innerHTML += "<br><br>";
+      j = 0;
+      i++;
+      setTimeout(typeLine, 700);
     }
+  }
+}
+typeLine();
 
-    setTimeout(typeEffect, 1000);
+/* hearts */
+setInterval(()=>{
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4 + Math.random()*3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+},500);
+
+function nextPage(){
+  window.location.href = "page2.html";
+}
 </script>
 
 </body>
 </html>
+
+ 
