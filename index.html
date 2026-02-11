@@ -8,11 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
   height:100vh;
@@ -21,7 +17,7 @@ body{
   justify-content:center;
   align-items:center;
   background:
-    radial-gradient(circle at center, #5b0015, #000),
+    radial-gradient(circle at center,#5b0015,#000),
     repeating-linear-gradient(
       45deg,
       rgba(255,0,80,.08) 0,
@@ -32,29 +28,26 @@ body{
   font-family:sans-serif;
 }
 
-/* ❤️ HEARTS */
+/* HEARTS */
 .heart{
   position:absolute;
   color:#ff4d6d;
   opacity:.85;
   pointer-events:none;
 }
-
-@keyframes floatUp{
-  from{transform:translateY(110vh) scale(.6);}
-  to{transform:translateY(-10vh) scale(1.4);}
+@keyframes up{
+  from{transform:translateY(110vh) scale(.6)}
+  to{transform:translateY(-10vh) scale(1.4)}
 }
-
-@keyframes floatDown{
-  from{transform:translateY(-10vh) scale(.6);}
-  to{transform:translateY(110vh) scale(1.4);}
+@keyframes down{
+  from{transform:translateY(-10vh) scale(.6)}
+  to{transform:translateY(110vh) scale(1.4)}
 }
 
 /* CARD */
 .card{
-  position:relative;
-  z-index:10;
   text-align:center;
+  z-index:10;
 }
 
 .gif-box{
@@ -64,25 +57,26 @@ body{
   border-radius:20px;
   box-shadow:0 0 30px rgba(255,0,90,.7);
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   margin:auto;
 }
-
-.gif-box img{
-  width:140px;
-}
+.gif-box img{width:140px}
 
 .text{
   margin-top:25px;
-  font-family:'Great Vibes', cursive;
+  font-family:'Great Vibes',cursive;
   font-size:28px;
   color:#ffd6e0;
   text-shadow:0 0 14px rgba(255,120,160,.9);
 }
 
+/* BUTTONS */
 .buttons{
-  margin-top:30px;
+  margin-top:35px;
+  display:flex;
+  gap:20px;
+  justify-content:center;
 }
 
 button{
@@ -101,48 +95,42 @@ button{
 
 /* NO button */
 #no{
-  position:fixed;
   background:#1c1c1c;
   color:white;
   box-shadow:0 0 12px rgba(255,255,255,.25);
-  white-space:nowrap;
+  position:relative;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ❤️ HEARTS SCRIPT -->
+<!-- HEARTS -->
 <script>
 for(let i=0;i<40;i++){
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "❤️";
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(10+Math.random()*16)+"px";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.animationIterationCount="infinite";
+  h.style.animationTimingFunction="linear";
 
-  const up = Math.random() > 0.5;
-
-  h.style.left = Math.random()*100 + "vw";
-  h.style.fontSize = (10 + Math.random()*16) + "px";
-  h.style.animationDuration = (6 + Math.random()*6) + "s";
-  h.style.animationTimingFunction = "linear";
-  h.style.animationIterationCount = "infinite";
-
-  if(up){
-    h.style.top = "100vh";
-    h.style.animationName = "floatUp";
+  if(Math.random()>0.5){
+    h.style.top="100vh";
+    h.style.animationName="up";
   }else{
-    h.style.top = "-10vh";
-    h.style.animationName = "floatDown";
+    h.style.top="-10vh";
+    h.style.animationName="down";
   }
-
   document.body.appendChild(h);
 }
 </script>
 
 <div class="card">
   <div class="gif-box">
-    <!-- 🔁 Change GIF name if needed -->
-    <img src="dudu.gif" alt="love">
+    <img src="dudu.gif">
   </div>
 
   <div class="text">
@@ -152,46 +140,42 @@ for(let i=0;i<40;i++){
 
   <div class="buttons">
     <button id="yes">Yes ✨</button>
+    <button id="no">No 🥺</button>
   </div>
 </div>
 
-<button id="no">No 🥺</button>
-
 <script>
-const no = document.getElementById("no");
+const no=document.getElementById("no");
 
-const words = [
+const words=[
   "Don’t touch 😭",
   "Why 🥺",
   "Please no 💔",
   "Hey 😳",
   "Stop it 😭"
 ];
-let idx = 0;
+let i=0;
 
 function moveNo(){
-  no.innerText = words[idx];
-  idx = (idx + 1) % words.length;
+  no.innerText=words[i];
+  i=(i+1)%words.length;
 
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 60);
-
-  no.style.left = x + "px";
-  no.style.top  = y + "px";
+  no.style.position="fixed";
+  no.style.left=Math.random()*(window.innerWidth-120)+"px";
+  no.style.top=Math.random()*(window.innerHeight-80)+"px";
 }
 
 /* Laptop */
-no.addEventListener("mouseenter", moveNo);
-
+no.addEventListener("mouseenter",moveNo);
 /* Mobile */
-no.addEventListener("touchstart", e=>{
+no.addEventListener("touchstart",e=>{
   e.preventDefault();
   moveNo();
 });
 
-/* YES click */
-document.getElementById("yes").onclick = ()=>{
-  document.body.innerHTML = `
+/* YES → NEXT PAGE */
+document.getElementById("yes").onclick=()=>{
+  document.body.innerHTML=`
     <div style="
       height:100vh;
       display:flex;
@@ -199,11 +183,13 @@ document.getElementById("yes").onclick = ()=>{
       align-items:center;
       background:black;
       font-family:'Great Vibes',cursive;
-      font-size:42px;
+      font-size:44px;
       color:#ff7aa2;
       text-shadow:0 0 20px pink;
+      text-align:center;
     ">
-      I knew you’d say YES 💖
+      I know you said YES 💖<br>
+      Forever starts now ✨
     </div>
   `;
 };
@@ -211,4 +197,3 @@ document.getElementById("yes").onclick = ()=>{
 
 </body>
 </html>
-
