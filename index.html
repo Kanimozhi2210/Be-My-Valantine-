@@ -5,36 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine 💗</title>
 
-<!-- Romantic Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   height:100vh;
   overflow:hidden;
-  background: radial-gradient(circle at top, #4a0d1f, #1a0208 70%);
+  background:
+    radial-gradient(circle at center, #3a0615 0%, #0b0205 65%),
+    radial-gradient(circle at top left, #ff4d6d55, transparent 60%),
+    radial-gradient(circle at bottom right, #ff4d6d55, transparent 60%);
   position:relative;
   font-family:'Poppins', sans-serif;
 }
 
-/* 💗 BACKGROUND HEART PATTERN */
+/* background hearts */
 .bg-hearts{
   position:fixed;
   inset:0;
-  background-image:
-    radial-gradient(#ff4d6d 1.2px, transparent 1.2px);
-  background-size:40px 40px;
-  opacity:0.25;
+  background-image: radial-gradient(#ff4d6d 1.2px, transparent 1.2px);
+  background-size:38px 38px;
+  opacity:0.3;
   z-index:0;
 }
 
-/* CENTER CONTENT */
+/* center */
 .container{
   position:relative;
   z-index:3;
@@ -44,89 +41,51 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:20px;
+  color:#ffd6e0;
 }
 
-/* GIF */
+/* gif */
 .container img{
   width:200px;
   margin-bottom:20px;
 }
 
-/* 💕 ROMANTIC TEXT */
+/* text */
 .question{
   font-family:'Great Vibes', cursive;
   font-size:34px;
-  color:#ffd6e0;
-  text-shadow:0 0 10px rgba(255,77,109,0.6);
   max-width:340px;
-  margin-bottom:40px;
   line-height:1.4;
+  text-shadow:0 0 12px rgba(255,77,109,0.8);
+  margin-bottom:40px;
 }
 
-/* BUTTONS */
-.buttons{
-  display:flex;
-  gap:30px;
-  position:relative;
-}
-
-/* YES BUTTON */
+/* yes */
 .yes{
-  padding:12px 32px;
+  padding:12px 34px;
   border:none;
   border-radius:30px;
-  font-size:15px;
   background:#ff4d6d;
   color:white;
+  font-size:15px;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,77,109,0.6);
+  box-shadow:0 0 20px rgba(255,77,109,0.7);
 }
 
-/* NO BUTTON */
+/* no floating */
 .no{
-  padding:12px 28px;
+  position:fixed;
+  padding:12px 30px;
   border:none;
   border-radius:30px;
-  font-size:14px;
-  background:#444;
+  background:#2e2e2e;
   color:white;
-  cursor:pointer;
-  position:relative;
-}
-
-/* 💗 FLOATING HEARTS AROUND NO BUTTON */
-.no-zone{
-  position:relative;
-}
-
-.no-heart{
-  position:absolute;
   font-size:14px;
-  color:#ff4d6d;
-  animation: orbit 3s linear infinite;
+  cursor:pointer;
+  z-index:4;
 }
 
-.no-heart:nth-child(1){ top:-20px; left:10px; }
-.no-heart:nth-child(2){ bottom:-20px; right:10px; animation-delay:1s;}
-.no-heart:nth-child(3){ top:10px; right:-20px; animation-delay:2s;}
-
-@keyframes orbit{
-  0%{ transform:scale(1); opacity:0.6; }
-  50%{ transform:scale(1.6); opacity:1; }
-  100%{ transform:scale(1); opacity:0.6; }
-}
-
-/* RESULT TEXT */
-.result{
-  display:none;
-  font-family:'Great Vibes', cursive;
-  font-size:38px;
-  color:#ffb3c6;
-  text-shadow:0 0 15px rgba(255,77,109,0.8);
-}
-
-/* FLOATING HEARTS SCREEN */
+/* floating hearts */
 .heart{
   position:fixed;
   z-index:2;
@@ -138,20 +97,12 @@ body{
   transition:transform 0.2s;
 }
 
-.heart:hover{
-  transform:scale(2.5);
-}
+.heart:hover{transform:scale(2.5);}
 
 @keyframes float{
-  from{
-    transform: translateY(110vh) scale(0.6);
-    opacity:0;
-  }
+  from{transform:translateY(110vh) scale(0.6);opacity:0;}
   50%{opacity:1;}
-  to{
-    transform: translateY(-10vh) scale(1);
-    opacity:0;
-  }
+  to{transform:translateY(-10vh) scale(1);opacity:0;}
 }
 </style>
 </head>
@@ -163,56 +114,52 @@ body{
 <div class="container">
   <img src="dudu.gif" alt="Dudu Bubu Hug">
 
-  <div class="question" id="question">
+  <div class="question">
     Love is finding someone who makes life better,<br>
     will you be that someone? 💗
   </div>
 
-  <div class="buttons" id="buttons">
-    <button class="yes" onclick="yesClick()">Yes 💖</button>
-
-    <div class="no-zone">
-      <span class="no-heart">💗</span>
-      <span class="no-heart">💗</span>
-      <span class="no-heart">💗</span>
-      <button class="no" id="noBtn">No</button>
-    </div>
-  </div>
-
-  <div class="result" id="result">I knew you’d say yes 💖</div>
+  <!-- YES GOES TO NEXT PAGE -->
+  <button class="yes" onclick="goNext()">Yes 💖</button>
 </div>
 
-<script>
-/* SCREEN FLOATING HEARTS */
-setInterval(()=>{
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="❤";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.fontSize=(14+Math.random()*14)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),8000);
-},350);
+<!-- NO BUTTON -->
+<button class="no" id="noBtn">Why love 🥺</button>
 
-/* NO BUTTON ESCAPE */
+<script>
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(14+Math.random()*14)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},300);
+
+/* no escape */
 const noBtn=document.getElementById("noBtn");
-const words=["Don’t break my heart 💔","Why love 🥺","Please no 😭","Try again 💗","You can’t 😌"];
+const words=[
+  "Don’t break my heart 💔",
+  "Why love 🥺",
+  "Please no 😭",
+  "Try again 💗",
+  "You can’t escape love 😌"
+];
 
 function moveNo(){
-  const x=Math.random()*260-130;
-  const y=Math.random()*200-100;
-  noBtn.style.transform=`translate(${x}px,${y}px)`;
+  noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
+  noBtn.style.top=Math.random()*(window.innerHeight-60)+"px";
   noBtn.innerText=words[Math.floor(Math.random()*words.length)];
 }
-
+moveNo();
 noBtn.addEventListener("mouseenter",moveNo);
 noBtn.addEventListener("touchstart",moveNo);
 
-/* YES CLICK */
-function yesClick(){
-  document.getElementById("question").style.display="none";
-  document.getElementById("buttons").style.display="none";
-  document.getElementById("result").style.display="block";
+/* YES → NEXT PAGE */
+function goNext(){
+  window.location.href="page2.html";
 }
 </script>
 
