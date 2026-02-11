@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be Mine 💗</title>
 
-<!-- Romantic Font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -13,7 +12,6 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:sans-serif;
 }
 
 body{
@@ -31,36 +29,39 @@ body{
       transparent 1px,
       transparent 12px
     );
+  font-family:sans-serif;
 }
 
-/* Floating hearts */
+/* ❤️ HEARTS */
 .heart{
   position:absolute;
   color:#ff4d6d;
-  font-size:14px;
-  animation:float 10s linear infinite;
-  opacity:.8;
+  opacity:.85;
+  pointer-events:none;
 }
 
-@keyframes float{
-  0%{transform:translateY(110vh) scale(.7);}
-  100%{transform:translateY(-10vh) scale(1.4);}
+@keyframes floatUp{
+  from{transform:translateY(110vh) scale(.6);}
+  to{transform:translateY(-10vh) scale(1.4);}
 }
 
-/* Card */
+@keyframes floatDown{
+  from{transform:translateY(-10vh) scale(.6);}
+  to{transform:translateY(110vh) scale(1.4);}
+}
+
+/* CARD */
 .card{
   position:relative;
-  z-index:5;
+  z-index:10;
   text-align:center;
-  padding:40px 20px;
 }
 
-/* GIF box */
 .gif-box{
   width:180px;
   height:180px;
   background:black;
-  border-radius:18px;
+  border-radius:20px;
   box-shadow:0 0 30px rgba(255,0,90,.7);
   display:flex;
   align-items:center;
@@ -72,29 +73,24 @@ body{
   width:140px;
 }
 
-/* Text */
 .text{
   margin-top:25px;
   font-family:'Great Vibes', cursive;
-  color:#ffd6e0;
   font-size:28px;
-  text-shadow:0 0 12px rgba(255,100,150,.8);
+  color:#ffd6e0;
+  text-shadow:0 0 14px rgba(255,120,160,.9);
 }
 
-/* Buttons */
 .buttons{
   margin-top:30px;
-  position:relative;
-  height:80px;
 }
 
 button{
   border:none;
-  padding:14px 30px;
+  padding:14px 34px;
   border-radius:999px;
   font-size:16px;
   cursor:pointer;
-  transition:.25s ease;
 }
 
 #yes{
@@ -103,9 +99,9 @@ button{
   box-shadow:0 0 18px rgba(255,0,80,.8);
 }
 
+/* NO button */
 #no{
-  position:absolute;
-  right:0;
+  position:fixed;
   background:#1c1c1c;
   color:white;
   box-shadow:0 0 12px rgba(255,255,255,.25);
@@ -116,23 +112,36 @@ button{
 
 <body>
 
-<!-- Floating hearts generator -->
+<!-- ❤️ HEARTS SCRIPT -->
 <script>
-for(let i=0;i<25;i++){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(6+Math.random()*6)+"s";
-  h.style.fontSize=(10+Math.random()*14)+"px";
+for(let i=0;i<40;i++){
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤️";
+
+  const up = Math.random() > 0.5;
+
+  h.style.left = Math.random()*100 + "vw";
+  h.style.fontSize = (10 + Math.random()*16) + "px";
+  h.style.animationDuration = (6 + Math.random()*6) + "s";
+  h.style.animationTimingFunction = "linear";
+  h.style.animationIterationCount = "infinite";
+
+  if(up){
+    h.style.top = "100vh";
+    h.style.animationName = "floatUp";
+  }else{
+    h.style.top = "-10vh";
+    h.style.animationName = "floatDown";
+  }
+
   document.body.appendChild(h);
 }
 </script>
 
 <div class="card">
-
-  <!-- CHANGE GIF NAME HERE -->
   <div class="gif-box">
+    <!-- 🔁 Change GIF name if needed -->
     <img src="dudu.gif" alt="love">
   </div>
 
@@ -143,38 +152,39 @@ for(let i=0;i<25;i++){
 
   <div class="buttons">
     <button id="yes">Yes ✨</button>
-    <button id="no">No 🥺</button>
   </div>
-
 </div>
+
+<button id="no">No 🥺</button>
 
 <script>
 const no = document.getElementById("no");
 
-const texts = [
+const words = [
   "Don’t touch 😭",
   "Why 🥺",
   "Please no 💔",
   "Hey 😳",
   "Stop it 😭"
 ];
-
-let index = 0;
+let idx = 0;
 
 function moveNo(){
-  no.textContent = texts[index];
-  index = (index + 1) % texts.length;
+  no.innerText = words[idx];
+  idx = (idx + 1) % words.length;
 
-  const x = Math.random()*140 - 70;
-  const y = Math.random()*80 - 40;
-  no.style.transform = `translate(${x}px, ${y}px)`;
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 60);
+
+  no.style.left = x + "px";
+  no.style.top  = y + "px";
 }
 
 /* Laptop */
 no.addEventListener("mouseenter", moveNo);
 
 /* Mobile */
-no.addEventListener("touchstart", (e)=>{
+no.addEventListener("touchstart", e=>{
   e.preventDefault();
   moveNo();
 });
@@ -185,12 +195,12 @@ document.getElementById("yes").onclick = ()=>{
     <div style="
       height:100vh;
       display:flex;
-      align-items:center;
       justify-content:center;
+      align-items:center;
       background:black;
-      color:#ff7aa2;
       font-family:'Great Vibes',cursive;
       font-size:42px;
+      color:#ff7aa2;
       text-shadow:0 0 20px pink;
     ">
       I knew you’d say YES 💖
@@ -201,3 +211,4 @@ document.getElementById("yes").onclick = ()=>{
 
 </body>
 </html>
+
