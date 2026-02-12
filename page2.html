@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I knew it 💖</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<title>Yes… I Knew It 💖</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 *{
   margin:0;
   padding:0;
@@ -17,125 +17,136 @@
 
 body{
   min-height:100vh;
-  background:radial-gradient(circle at center,#3a0015,#000);
+  background:
+    radial-gradient(circle at center, #3b0015, #0a0005);
   overflow:hidden;
   display:flex;
-  flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   color:white;
 }
 
-h1{
-  font-size:2.5rem;
-  margin-bottom:20px;
-  text-shadow:0 0 18px pink;
-}
-
-/* PHOTO AREA */
-#heartContainer{
-  position:relative;
-  width:320px;
-  height:300px;
-}
-
-/* PHOTOS */
-.photo{
+/* Floating hearts background */
+.heart-bg span{
   position:absolute;
-  width:55px;
-  height:55px;
-  border-radius:12px;
-  object-fit:cover;
-  opacity:0;
-  transform:scale(0.3);
-  transition:all 1.4s ease;
-  box-shadow:0 0 18px rgba(255,100,150,0.8);
+  font-size:18px;
+  color:#ff4d6d;
+  animation: float linear infinite;
+  opacity:0.7;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0}
+  50%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
 }
 
-.show{
+/* Main container */
+.container{
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+/* Title */
+.title{
+  font-size:42px;
+  margin-bottom:25px;
+  text-shadow:0 0 15px #ff4d6d;
+}
+
+/* Heart collage */
+.heart{
+  position:relative;
+  width:300px;
+  height:270px;
+  margin:auto;
+}
+
+/* Images */
+.heart img{
+  position:absolute;
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:15px;
+  opacity:0;
+  transform:scale(0);
+  transition:all 0.6s ease;
+  box-shadow:0 0 15px #ff4d6d;
+}
+.heart img.show{
   opacity:1;
   transform:scale(1);
 }
 
-/* FLOATING HEARTS */
-.heart{
-  position:fixed;
-  bottom:-20px;
-  font-size:18px;
-  color:#ff4d6d;
-  animation:floatUp linear infinite;
-}
-
-@keyframes floatUp{
-  from{ transform:translateY(0); opacity:1; }
-  to{ transform:translateY(-120vh); opacity:0; }
+/* Responsive */
+@media(max-width:600px){
+  .heart{width:260px;height:240px;}
+  .heart img{width:50px;height:50px;}
+  .title{font-size:34px;}
 }
 </style>
 </head>
 
 <body>
 
-<h1>Yes… I knew it 💖</h1>
+<!-- Floating hearts -->
+<div class="heart-bg"></div>
 
-<div id="heartContainer"></div>
+<div class="container">
+  <div class="title">Yes… I knew it 💖</div>
 
-<audio id="bgm" src="song.mp3"></audio>
+  <div class="heart" id="heart"></div>
+</div>
+
+<!-- Song -->
+<audio autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-const container = document.getElementById("heartContainer");
-const audio = document.getElementById("bgm");
-
-const TOTAL = 19;
-const photos = [];
-
-/* CREATE 19 IMAGES */
-for(let i=1;i<=TOTAL;i++){
-  const img = document.createElement("img");
-  img.src = `photos/${i}.jpg`;
-  img.className = "photo";
-  container.appendChild(img);
-  photos.push(img);
+/* Floating background hearts */
+const bg=document.querySelector('.heart-bg');
+for(let i=0;i<40;i++){
+  const s=document.createElement('span');
+  s.innerHTML='❤';
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDuration=(6+Math.random()*6)+'s';
+  s.style.fontSize=(10+Math.random()*20)+'px';
+  bg.appendChild(s);
 }
 
-/* PLAY SONG (mobile safe) */
-window.addEventListener("click",()=>audio.play(),{once:true});
+/* Images */
+const heart=document.getElementById('heart');
+const total=19;
 
-/* STEP 1: RANDOM SHOW ONE BY ONE */
-photos.forEach((img,i)=>{
+/* PERFECT HEART SHAPE POSITIONS */
+const pos=[
+[120,0],
+[80,20],[160,20],
+[40,60],[120,60],[200,60],
+[20,110],[80,110],[160,110],[220,110],
+[40,160],[120,160],[200,160],
+[80,210],[160,210],
+[120,250]
+];
+
+/* Add images */
+for(let i=1;i<=total;i++){
+  const img=document.createElement('img');
+  img.src=`img${i}.jpg`;
+  heart.appendChild(img);
+}
+
+/* Animate one by one */
+const imgs=document.querySelectorAll('.heart img');
+imgs.forEach((img,i)=>{
   setTimeout(()=>{
-    img.classList.add("show");
-    img.style.left = Math.random()*260 + "px";
-    img.style.top  = Math.random()*240 + "px";
-  }, i*250);
+    img.style.left=pos[i][0]+'px';
+    img.style.top=pos[i][1]+'px';
+    img.classList.add('show');
+  },i*300);
 });
-
-/* STEP 2: HEART SHAPE (AUTO MATH) */
-setTimeout(()=>{
-  const cx = 160;
-  const cy = 150;
-  const scale = 9;
-
-  photos.forEach((img,i)=>{
-    const t = Math.PI * 2 * (i / TOTAL);
-    const x = 16 * Math.pow(Math.sin(t),3);
-    const y = -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
-
-    img.style.left = cx + x*scale - 28 + "px";
-    img.style.top  = cy + y*scale - 28 + "px";
-  });
-}, 4200);
-
-/* FLOATING HEARTS (UP & DOWN) */
-setInterval(()=>{
-  const h = document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=5+Math.random()*5+"s";
-  document.body.appendChild(h);
-
-  setTimeout(()=>h.remove(),9000);
-},400);
 </script>
 
 </body>
