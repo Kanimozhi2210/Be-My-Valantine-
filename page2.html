@@ -2,118 +2,171 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>LOVE ❤️</title>
+<title>Yes… I knew it ❤️</title>
 
+<!-- Romantic cursive font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+/* ================= BASE ================= */
 body{
-  margin:0;height:100vh;overflow:hidden;
-  background:radial-gradient(#300000,#000);
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at top,#3b0000,#000);
   color:pink;
+  font-family:cursive;
 }
 
-/* PAGE 1 */
-#page1{
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  height:100vh;font-family:cursive;
+/* ================= FLOATING BACKGROUND HEARTS ================= */
+.heart-float{
+  position:fixed;
+  bottom:-20px;
+  font-size:18px;
+  color:#ff4d6d;
+  animation:floatUp linear infinite;
+  opacity:.7;
+  pointer-events:none;
 }
-#yesBtn{
-  margin-top:20px;padding:15px 35px;
-  font-size:20px;border:none;border-radius:30px;
-  background:hotpink;color:#fff;cursor:pointer;
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(.8);opacity:0}
+  15%{opacity:1}
+  100%{transform:translateY(-110vh) scale(1.5);opacity:0}
 }
 
-/* PAGE 2 */
-#page2{display:none;position:relative;width:100%;height:100%}
-
-/* CENTER TEXT */
-.center-text{
-  position:absolute;top:42%;left:50%;
-  transform:translate(-50%,-50%);
+/* ================= TOP TEXT ================= */
+.top-text{
+  position:absolute;
+  top:15%;
+  width:100%;
+  text-align:center;
   font-family:'Great Vibes',cursive;
-  font-size:90px;color:#ffb6c1;
-  text-shadow:0 0 10px red,0 0 25px hotpink,0 0 45px crimson;
-  z-index:2;
+  font-size:55px;
+  color:#ffd1dc;
+  text-shadow:0 0 10px hotpink,0 0 30px crimson;
+  z-index:3;
 }
 
-/* IMAGES */
-.pic{
-  position:absolute;width:70px;height:70px;
-  border-radius:15px;overflow:hidden;
-  opacity:0;transition:all .8s ease;
-  cursor:pointer;
+/* ================= HEART CONTAINER ================= */
+#heart{
+  position:relative;
+  width:100%;
+  height:100%;
 }
-.pic img{width:100%;height:100%;object-fit:cover}
-.pic.active{transform:scale(2);z-index:10}
+
+/* ================= IMAGE CARDS ================= */
+.pic{
+  position:absolute;
+  width:70px;
+  height:70px;
+  border-radius:16px;
+  overflow:hidden;
+  opacity:0;
+  transition:all .9s ease;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,105,180,.6);
+}
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.pic.active{
+  transform:scale(2);
+  z-index:10;
+}
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<div id="page1">
-  <h1>Will you be my Valentine? 💌</h1>
-  <button id="yesBtn">Yes ❤️</button>
-</div>
+<!-- Background music -->
+<audio id="bgm" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
-<!-- PAGE 2 -->
-<div id="page2">
-  <audio id="bgm" loop>
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
+<!-- Text -->
+<div class="top-text">Yes… I knew it ✨💖</div>
 
-  <div class="center-text">LOVE</div>
-  <div id="heart"></div>
-</div>
+<!-- Heart images -->
+<div id="heart"></div>
 
 <script>
-const yesBtn = document.getElementById("yesBtn");
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const heart = document.getElementById("heart");
-const audio = document.getElementById("bgm");
+/* ================= AUTOPLAY FIX ================= */
+const audio=document.getElementById("bgm");
+document.body.addEventListener("click",()=>audio.play(),{once:true});
 
-/* 19 images (same folder) */
-const images = Array.from({length:19}, (_,i)=>`img${i+1}.jpg`);
+/* ================= FLOATING HEARTS ================= */
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="heart-float";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(4+Math.random()*4)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+}
+setInterval(spawnHeart,400);
 
-/* 19 heart positions */
-const positions = [
-  [50,16],
-  [42,20],[58,20],
-  [35,26],[65,26],
-  [30,35],[70,35],
-  [28,45],[72,45],
-  [30,55],[70,55],
-  [36,64],[64,64],
-  [42,72],[58,72],
-  [48,80],[52,80],
-  [46,88],[54,88]
+/* ================= IMAGES ================= */
+const images=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
+
+/* Final heart positions */
+const heartPositions=[
+[50,16],
+[42,20],[58,20],
+[35,26],[65,26],
+[30,35],[70,35],
+[28,45],[72,45],
+[30,55],[70,55],
+[36,64],[64,64],
+[42,72],[58,72],
+[48,80],[52,80],
+[46,88],[54,88]
 ];
 
-yesBtn.onclick = () => {
-  page1.style.display="none";
-  page2.style.display="block";
-  audio.play();
+/* Random position helper */
+function randomPos(){
+  return {
+    x:Math.random()*80+10,
+    y:Math.random()*70+15
+  };
+}
 
-  images.forEach((src,i)=>{
-    const div=document.createElement("div");
-    div.className="pic";
-    const img=document.createElement("img");
-    img.src=src;
-    div.appendChild(img);
-    heart.appendChild(div);
+const heart=document.getElementById("heart");
 
-    setTimeout(()=>{
-      div.style.left = positions[i][0] + "%";
-      div.style.top  = positions[i][1] + "%";
-      div.style.opacity = 1;
-    }, i*350);
+/* ================= MAIN ANIMATION ================= */
+images.forEach((src,i)=>{
+  const d=document.createElement("div");
+  d.className="pic";
 
-    div.onclick = ()=>div.classList.toggle("active");
-  });
-};
+  const img=document.createElement("img");
+  img.src=src;
+
+  d.appendChild(img);
+  heart.appendChild(d);
+
+  /* STEP 1: random appear */
+  const r=randomPos();
+  d.style.left=r.x+"%";
+  d.style.top=r.y+"%";
+  d.style.transform="scale(0.4)";
+  d.style.opacity=0;
+
+  setTimeout(()=>{
+    d.style.opacity=1;
+    d.style.transform="scale(1)";
+  },i*300);
+
+  /* STEP 2: move to heart shape */
+  setTimeout(()=>{
+    d.style.left=heartPositions[i][0]+"%";
+    d.style.top=heartPositions[i][1]+"%";
+  },2000+i*200);
+
+  /* Zoom on touch */
+  d.onclick=()=>d.classList.toggle("active");
+});
 </script>
 
 </body>
