@@ -2,152 +2,164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Cute Moments ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Cute Moments</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 body{
   height:100vh;
-  background:radial-gradient(circle at top,#4b0000,#0b0000);
+  background:radial-gradient(circle at top,#4b0000,#120000);
   overflow:hidden;
   font-family:'Great Vibes',cursive;
+  color:white;
 }
 
-/* Title */
+/* Heading */
 h1{
   text-align:center;
-  margin-top:25px;
+  margin-top:20px;
   font-size:42px;
-  color:#ffd6e8;
-  text-shadow:0 0 15px #ff4d88;
+  text-shadow:0 0 15px pink;
 }
 
-/* Floating background hearts */
-.bg-heart{
-  position:absolute;
-  color:rgba(255,80,120,0.6);
-  animation:float linear infinite;
-}
-@keyframes float{
-  0%{transform:translateY(110vh);opacity:0}
-  20%{opacity:1}
-  100%{transform:translateY(-10vh);opacity:0}
-}
-
-/* Center */
-.wrapper{
-  height:calc(100vh - 100px);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* HEART */
-.heart{
+/* HEART WRAPPER */
+.heart-wrap{
   position:relative;
   width:300px;
-  height:280px;
+  height:300px;
+  margin:40px auto 0;
 }
 
-/* Photo */
+/* IMAGE BOX */
 .pic{
   position:absolute;
   width:70px;
   height:70px;
   border-radius:18px;
   overflow:hidden;
-  box-shadow:0 0 22px #ff5f9e;
+  box-shadow:0 0 18px rgba(255,120,160,0.9);
 }
+
 .pic img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* --- HEART POSITIONS --- */
-/* Row 1 (SPACE in center) */
-.p1{top:0; left:40px;}
-.p2{top:0; left:190px;}
+/* HEART POSITIONS (9 IMAGES – PERFECT SHAPE) */
+.p1{top:10px;left:115px;}
+.p2{top:55px;left:60px;}
+.p3{top:55px;left:170px;}
 
-/* Center photo (between row 1) */
-.pc{top:40px; left:115px;}
+.p4{top:120px;left:25px;}
+.p5{top:120px;left:115px;}
+.p6{top:120px;left:205px;}
 
-/* Row 2 */
-.p3{top:80px; left:0;}
-.p4{top:80px; left:80px;}
-.p5{top:80px; left:160px;}
-.p6{top:80px; left:240px;}
+.p7{top:185px;left:60px;}
+.p8{top:185px;left:170px;}
 
-/* Row 3 */
-.p7{top:150px; left:40px;}
-.p8{top:150px; left:120px;}
-.p9{top:150px; left:200px;}
+.p9{top:240px;left:115px;}
 
-/* Point */
-.p10{top:215px; left:120px;}
+/* DUDU GIF */
+.dudu{
+  position:fixed;
+  bottom:115px;
+  right:28px;
+  width:85px;
+  animation:bounce 2s infinite;
+}
 
-@media(max-width:600px){
-  .heart{transform:scale(1.3)}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+
+/* NEXT BUTTON */
+.next-btn{
+  position:fixed;
+  bottom:30px;
+  right:25px;
+  padding:12px 26px;
+  font-size:22px;
+  color:white;
+  text-decoration:none;
+  background:linear-gradient(45deg,#ff4d88,#ff80bf);
+  border-radius:40px;
+  box-shadow:0 0 18px #ff4d88;
+  animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+
+/* FLOATING HEARTS */
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-120vh);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<h1>Our Cute Moments ❤️</h1>
+<h1>Our Cute Moments 💖</h1>
 
-<!-- AUDIO -->
-<audio id="song" loop>
-  <source src="song.mp3" type="audio/mpeg">
-</audio>
+<!-- HEART -->
+<div class="heart-wrap">
+  <div class="pic p1"><img src="img11.png"></div>
 
-<div class="wrapper">
-  <div class="heart">
+  <div class="pic p2"><img src="img12.jpg"></div>
+  <div class="pic p3"><img src="img13.jpg"></div>
 
-    <!-- Row 1 -->
-    <div class="pic p1"><img src="img11.png"></div>
-    <div class="pic p2"><img src="img12.jpg"></div>
+  <div class="pic p4"><img src="img14.jpg"></div>
+  <div class="pic p5"><img src="img15.jpg"></div>
+  <div class="pic p6"><img src="img16.jpg"></div>
 
-    <!-- Center -->
-    <div class="pic pc"><img src="img13.jpg"></div>
+  <div class="pic p7"><img src="img17.jpg"></div>
+  <div class="pic p8"><img src="img18.jpg"></div>
 
-    <!-- Row 2 -->
-    <div class="pic p3"><img src="img14.jpg"></div>
-    <div class="pic p4"><img src="img15.jpg"></div>
-    <div class="pic p5"><img src="img16.jpg"></div>
-    <div class="pic p6"><img src="img17.jpg"></div>
-
-    <!-- Row 3 -->
-    <div class="pic p7"><img src="img10.jpg"></div>
-    <div class="pic p8"><img src="img1.jpg"></div>
-    <div class="pic p9"><img src="img18.jpg"></div>
-
-    <!-- Bottom -->
-    <div class="pic p10"><img src="img12.jpg"></div>
-
-  </div>
+  <div class="pic p9"><img src="img10.jpg"></div>
 </div>
 
-<script>
-/* Background floating hearts */
-for(let i=0;i<45;i++){
-  const h=document.createElement("div");
-  h.className="bg-heart";
-  h.innerHTML="❤";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(10+Math.random()*25)+"px";
-  h.style.animationDuration=(6+Math.random()*7)+"s";
-  document.body.appendChild(h);
-}
+<!-- DUDU GIF -->
+<img src="dudu1.gif" class="dudu">
 
-/* Mobile autoplay fix */
+<!-- NEXT BUTTON -->
+<a href="page3.html" class="next-btn">Next ➜</a>
+
+<!-- SONG -->
+<audio id="song" src="song.mp3" loop></audio>
+<script>
 document.body.addEventListener("click",()=>{
   document.getElementById("song").play();
 },{once:true});
+</script>
+
+<!-- FLOATING HEART SCRIPT -->
+<script>
+for(let i=0;i<50;i++){
+  const heart=document.createElement("div");
+  heart.innerHTML="❤";
+  heart.style.position="fixed";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.bottom="-20px";
+  heart.style.fontSize=(12+Math.random()*22)+"px";
+  heart.style.color="rgba(255,80,120,0.6)";
+  heart.style.animation=`floatUp ${6+Math.random()*6}s linear infinite`;
+  document.body.appendChild(heart);
+}
 </script>
 
 </body>
