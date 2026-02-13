@@ -2,108 +2,121 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yes… I knew it ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-/* ===== BASE ===== */
+/* ========== BASE ========== */
 body{
   margin:0;
   min-height:100vh;
   background:radial-gradient(circle at top,#4a0000,#000);
   overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* ===== HANGING LIGHTS ===== */
+/* ========== LIGHTS ========== */
 .lights{
   position:fixed;
   top:0;
   width:100%;
-  height:120px;
+  height:90px;
   z-index:10;
-  pointer-events:none;
 }
 .bulb{
   position:absolute;
   top:28px;
-  width:8px;
-  height:8px;
+  width:7px;
+  height:7px;
   background:#ffd1dc;
   border-radius:50%;
-  box-shadow:0 0 15px hotpink;
+  box-shadow:0 0 14px hotpink;
   animation:blink 2s infinite alternate;
 }
 @keyframes blink{from{opacity:.3}to{opacity:1}}
 
-/* ===== FLOATING HEARTS ===== */
+/* ========== FLOATING HEARTS ========== */
 .heart-float{
   position:fixed;
   bottom:-20px;
-  font-size:20px;
+  font-size:18px;
   color:#ff4d6d;
   animation:floatUp linear infinite;
   pointer-events:none;
 }
 @keyframes floatUp{
   0%{transform:translateY(0);opacity:0}
-  20%{opacity:1}
+  15%{opacity:1}
   100%{transform:translateY(-110vh);opacity:0}
 }
 
-/* ===== TOP TEXT ===== */
+/* ========== TOP TEXT ========== */
 .top-text{
-  margin-top:110px;
-  text-align:center;
+  margin-top:95px;          /* 🔥 INNUM KEELA */
   font-family:'Great Vibes',cursive;
-  font-size:46px;
+  font-size:44px;
   color:#ffd1dc;
   text-shadow:0 0 12px hotpink,0 0 30px crimson;
+  text-align:center;
 }
 
-/* ===== CENTER AREA ===== */
+/* ========== CENTER AREA ========== */
 .center-wrapper{
+  flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:82vh;
+  width:100%;
 }
 
-/* ===== BIG HEART ===== */
+/* ========== HEART ========== */
 .heart-wrapper{
   position:relative;
-  width:125vw;          /* 🔥 VERY BIG FOR MOBILE */
-  max-width:620px;      /* laptop safe */
+  width:100vw;              /* 🔥 MOBILE FULL WIDTH */
+  max-width:520px;
   aspect-ratio:1/1;
+  animation:pulse 2.8s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+  100%{transform:scale(1)}
 }
 
-/* ===== LOVE TEXT ===== */
+/* ========== LOVE TEXT ========== */
 .center-love{
   position:absolute;
-  top:58%;              /* 🔥 INNUM KEELA */
+  top:60%;                  /* 🔥 LOWER */
   left:50%;
   transform:translate(-50%,-50%);
   font-family:'Great Vibes',cursive;
-  font-size:96px;       /* 🔥 INNUM PERUSA */
+  font-size:92px;
   color:#ffb6c1;
-  text-shadow:0 0 12px hotpink,0 0 30px crimson;
-  opacity:.8;
+  text-shadow:0 0 14px hotpink,0 0 30px crimson;
+  opacity:.85;
   z-index:1;
   pointer-events:none;
 }
 
-/* ===== PHOTOS ===== */
+/* ========== PHOTOS ========== */
 .pic{
   position:absolute;
-  width:120px;          /* 🔥 BIG PHOTOS */
-  height:120px;
+  width:118px;
+  height:118px;
   border-radius:26px;
   overflow:hidden;
   opacity:0;
+  box-shadow:0 0 22px hotpink;
   transition:all 1s ease;
-  box-shadow:0 0 24px hotpink;
-  cursor:pointer;
-  z-index:5;
+  animation:gentleRotate 6s ease-in-out infinite alternate;
+}
+@keyframes gentleRotate{
+  from{transform:rotate(-2deg)}
+  to{transform:rotate(2deg)}
 }
 .pic img{
   width:100%;
@@ -115,31 +128,31 @@ body{
   z-index:20;
 }
 
-/* ===== SIDE BUTTON ===== */
+/* ========== SIDE BUTTON ========== */
 .side-action{
   position:fixed;
-  right:18px;
+  right:14px;
   bottom:22%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:12px;
+  gap:10px;
 }
-.dudu-gif{width:80px}
+.dudu-gif{width:78px}
 .next-btn{
-  padding:18px 36px;
-  font-size:22px;
+  padding:16px 34px;
+  font-size:20px;
   border:none;
-  border-radius:32px;
+  border-radius:30px;
   background:hotpink;
   color:white;
   box-shadow:0 0 24px hotpink;
 }
 
-/* ===== DESKTOP FIX ===== */
+/* ========== DESKTOP SAFE ========== */
 @media(min-width:768px){
-  .top-text{font-size:56px}
-  .center-love{font-size:108px; top:55%}
+  .top-text{font-size:54px;margin-top:90px}
+  .center-love{font-size:108px}
   .pic{width:130px;height:130px}
 }
 </style>
@@ -174,7 +187,7 @@ body{
 </div>
 
 <script>
-/* autoplay fix */
+/* autoplay */
 document.addEventListener("touchstart",()=>{
   document.getElementById("bgm").play().catch(()=>{});
 },{once:true});
@@ -188,7 +201,7 @@ setInterval(()=>{
   h.style.animationDuration=(4+Math.random()*4)+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
-},400);
+},450);
 
 /* images */
 const imgs=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
@@ -224,18 +237,16 @@ imgs.forEach((src,i)=>{
 
   d.style.left="50%";
   d.style.top="50%";
-  d.style.transform="scale(.3)";
   d.style.opacity=0;
 
   setTimeout(()=>{
     d.style.opacity=1;
-    d.style.transform="scale(1)";
   },i*200);
 
   setTimeout(()=>{
     d.style.left=pos[i].x+"%";
     d.style.top=pos[i].y+"%";
-  },1500+i*150);
+  },1400+i*140);
 
   d.onclick=()=>d.classList.toggle("active");
 });
@@ -247,3 +258,4 @@ function goNext(){
 
 </body>
 </html>
+
