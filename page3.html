@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Puzzle 💖</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#2a0d18,#0b0005);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI', cursive;
+  overflow:hidden;
+  color:white;
+}
+
+/* floating hearts */
+.heart{
+  position:absolute;
+  color:rgba(255,80,120,0.45);
+  animation:float 9s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(110vh);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* quiz card */
+.card{
+  background:rgba(0,0,0,0.45);
+  padding:30px;
+  border-radius:22px;
+  text-align:center;
+  width:300px;
+  box-shadow:0 0 30px rgba(255,60,120,0.7);
+  z-index:10;
+}
+
+h2{
+  color:#ffb3c6;
+  margin-bottom:15px;
+}
+
+/* gif */
+.gif-box img{
+  width:140px;
+  margin:15px 0;
+  border-radius:18px;
+  box-shadow:0 0 20px rgba(255,120,160,0.8);
+}
+
+/* input */
+input{
+  padding:10px;
+  width:85%;
+  border-radius:22px;
+  border:none;
+  outline:none;
+  text-align:center;
+  font-size:15px;
+}
+
+/* button */
+button{
+  margin-top:14px;
+  padding:10px 26px;
+  border:none;
+  border-radius:25px;
+  background:#ff4d79;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,80,130,0.8);
+}
+button:hover{
+  background:#ff2f66;
+}
+</style>
+</head>
+
+<body>
+
+<!-- floating hearts -->
+<script>
+for(let i=0;i<30;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(12+Math.random()*20)+"px";
+  h.style.animationDuration=(6+Math.random()*8)+"s";
+  document.body.appendChild(h);
+}
+</script>
+
+<div class="card">
+  <h2>Solve the puzzle<br>to get a special gift 💝</h2>
+
+  <div class="gif-box">
+    <img id="gif" src="dudu2.gif">
+  </div>
+
+  <div>What is the magic word? 💕</div>
+
+  <input id="answer" placeholder="Type your answer...">
+
+  <br>
+  <button onclick="checkAnswer()">Submit</button>
+</div>
+
+<script>
+const input = document.getElementById("answer");
+const gif = document.getElementById("gif");
+
+/* typing reactions */
+input.addEventListener("input", ()=>{
+  if(input.value.length === 0){
+    gif.src = "dudu2.gif";      // idle
+  }
+  else if(input.value.length <= 2){
+    gif.src = "dudu3.gif";      // typing
+  }
+  else{
+    gif.src = "dudu4.gif";      // excited typing
+  }
+});
+
+/* check answer */
+function checkAnswer(){
+  const ans = input.value.trim().toLowerCase();
+
+  if(ans === "love"){
+    gif.src = "dudu5.gif";      // correct / happy
+    setTimeout(()=>{
+      window.location.href = "page4.html"; // FINAL PAGE
+    },1500);
+  }else{
+    gif.src = "dudu6.gif";      // ❌ wrong → thinking cute gif
+  }
+}
+</script>
+
+</body>
+</html>
