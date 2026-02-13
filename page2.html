@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Yes… I knew it ❤️</title>
 
-<!-- Romantic cursive font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -15,10 +14,10 @@ body{
   background:radial-gradient(circle at top,#3b0000,#000);
   font-family:cursive;
   color:pink;
-  overflow-y:auto;
+  overflow-x:hidden;
 }
 
-/* ================= FLOATING BACKGROUND HEARTS ================= */
+/* ================= FLOATING HEARTS ================= */
 .heart-float{
   position:fixed;
   bottom:-20px;
@@ -36,21 +35,28 @@ body{
 
 /* ================= TOP TEXT ================= */
 .top-text{
-  margin-top:40px;
+  margin-top:30px;
   text-align:center;
   font-family:'Great Vibes',cursive;
-  font-size:42px;
+  font-size:40px;
   color:#ffd1dc;
   text-shadow:0 0 10px hotpink,0 0 30px crimson;
 }
 
-/* ================= HEART CONTAINER (KEY FIX) ================= */
+/* ================= HEART CENTER WRAPPER ================= */
+.center-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:65vh;              /* 🔥 center vertically */
+}
+
+/* ================= HEART BOX ================= */
 .heart-wrapper{
   position:relative;
-  width:90vw;
-  max-width:360px;
-  aspect-ratio:1/1;        /* 🔥 square => perfect heart */
-  margin:30px auto;
+  width:92vw;
+  max-width:380px;
+  aspect-ratio:1/1;
 }
 
 /* ================= CENTER LOVE ================= */
@@ -60,7 +66,7 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   font-family:'Great Vibes',cursive;
-  font-size:64px;
+  font-size:70px;
   color:#ffb6c1;
   opacity:0.75;
   text-shadow:0 0 8px hotpink,0 0 18px crimson;
@@ -71,14 +77,14 @@ body{
 /* ================= IMAGE CARDS ================= */
 .pic{
   position:absolute;
-  width:60px;
-  height:60px;
-  border-radius:14px;
+  width:76px;               /* 🔥 BIGGER PHOTOS */
+  height:76px;
+  border-radius:18px;
   overflow:hidden;
   opacity:0;
   transition:all 1s ease;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,105,180,.6);
+  box-shadow:0 0 15px rgba(255,105,180,.7);
   z-index:3;
 }
 .pic img{
@@ -91,59 +97,61 @@ body{
   z-index:10;
 }
 
-/* ================= END ACTION ================= */
-.end-action{
-  margin:20px 0 40px;
+/* ================= SIDE ACTION BUTTON ================= */
+.side-action{
+  position:fixed;
+  right:12px;
+  bottom:20%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:10px;
+  gap:8px;
+  z-index:10;
 }
 
 .dudu-gif{
-  width:60px;
+  width:55px;
 }
 
 .next-btn{
-  padding:12px 28px;
-  font-size:18px;
+  padding:10px 18px;
+  font-size:16px;
   border:none;
-  border-radius:25px;
+  border-radius:22px;
   background:hotpink;
   color:white;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,105,180,.8);
+  box-shadow:0 0 15px rgba(255,105,180,.9);
 }
 </style>
 </head>
 
 <body>
 
-<!-- Music -->
 <audio id="bgm" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Top Text -->
 <div class="top-text">Yes… I knew it ✨💖</div>
 
-<!-- Heart Area -->
-<div class="heart-wrapper" id="heart">
-  <div class="center-love">LOVE</div>
+<div class="center-wrapper">
+  <div class="heart-wrapper" id="heart">
+    <div class="center-love">LOVE</div>
+  </div>
 </div>
 
-<!-- End Action -->
-<div class="end-action">
-  <img src="dudu1.gif" class="dudu-gif" alt="cute gif">
-  <button class="next-btn" onclick="goNext()">Click Me 💖</button>
+<!-- SIDE BUTTON -->
+<div class="side-action">
+  <img src="dudu1.gif" class="dudu-gif">
+  <button class="next-btn" onclick="goNext()">Click 💖</button>
 </div>
 
 <script>
-/* ================= AUTOPLAY FIX ================= */
+/* autoplay */
 const audio=document.getElementById("bgm");
 document.body.addEventListener("click",()=>audio.play(),{once:true});
 
-/* ================= FLOATING HEARTS ================= */
+/* floating hearts */
 function spawnHeart(){
   const h=document.createElement("div");
   h.className="heart-float";
@@ -155,23 +163,22 @@ function spawnHeart(){
 }
 setInterval(spawnHeart,500);
 
-/* ================= IMAGES ================= */
+/* images */
 const images=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
 const heart=document.getElementById("heart");
 
-/* Heart math formula */
+/* heart math */
 function generateHeartPoints(n){
   const pts=[];
   for(let i=0;i<n;i++){
     const t=Math.PI*2*i/n;
-    const x=16*Math.pow(Math.sin(t),3);
-    const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
-    pts.push({x,y});
+    pts.push({
+      x:16*Math.pow(Math.sin(t),3),
+      y:13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t)
+    });
   }
   return pts;
 }
-
-/* Normalize to container (0–100%) */
 function normalize(points){
   const xs=points.map(p=>p.x), ys=points.map(p=>p.y);
   const minX=Math.min(...xs), maxX=Math.max(...xs);
@@ -184,7 +191,6 @@ function normalize(points){
 
 const finalPos=normalize(generateHeartPoints(images.length));
 
-/* Random appear → heart arrange */
 images.forEach((src,i)=>{
   const d=document.createElement("div");
   d.className="pic";
@@ -211,7 +217,6 @@ images.forEach((src,i)=>{
   d.onclick=()=>d.classList.toggle("active");
 });
 
-/* Next page */
 function goNext(){
   window.location.href="page3.html";
 }
