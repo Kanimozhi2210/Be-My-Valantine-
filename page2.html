@@ -10,14 +10,14 @@
 /* ================= BASE ================= */
 body{
   margin:0;
-  height:100vh;
-  overflow:hidden;
+  min-height:100vh;
   background:radial-gradient(circle at top,#3b0000,#000);
   font-family:cursive;
   color:pink;
+  overflow-y:auto;
 }
 
-/* ================= FLOATING HEARTS ================= */
+/* ================= FLOATING BACKGROUND HEARTS ================= */
 .heart-float{
   position:fixed;
   bottom:-20px;
@@ -43,7 +43,7 @@ body{
   font-size:55px;
   color:#ffd1dc;
   text-shadow:0 0 10px hotpink,0 0 30px crimson;
-  z-index:3;
+  z-index:4;
 }
 
 /* ================= CENTER LOVE ================= */
@@ -51,12 +51,13 @@ body{
   position:absolute;
   top:50%;
   left:50%;
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%) translateY(18px);
   font-family:'Great Vibes',cursive;
   font-size:90px;
   color:#ffb6c1;
-  text-shadow:0 0 10px hotpink,0 0 25px crimson,0 0 50px red;
-  z-index:2;
+  opacity:0.75;
+  text-shadow:0 0 8px hotpink,0 0 18px crimson;
+  z-index:1;              /* 👈 behind photos */
   pointer-events:none;
 }
 
@@ -64,7 +65,7 @@ body{
 #heart{
   position:relative;
   width:100%;
-  height:100%;
+  height:100vh;
 }
 
 /* ================= IMAGE CARDS ================= */
@@ -78,6 +79,7 @@ body{
   transition:all 1s ease;
   cursor:pointer;
   box-shadow:0 0 15px rgba(255,105,180,.6);
+  z-index:3;             /* 👈 above LOVE */
 }
 .pic img{
   width:100%;
@@ -92,12 +94,13 @@ body{
 /* ================= END ACTION ================= */
 .end-action{
   position:absolute;
-  bottom:6%;
+  bottom:4%;
   width:100%;
   display:flex;
+  flex-direction:column;     /* gif top, button bottom */
   justify-content:center;
   align-items:center;
-  gap:15px;
+  gap:10px;
   z-index:5;
 }
 
@@ -148,7 +151,7 @@ body{
 const audio=document.getElementById("bgm");
 document.body.addEventListener("click",()=>audio.play(),{once:true});
 
-/* ================= FLOATING BACKGROUND HEARTS ================= */
+/* ================= FLOATING HEARTS ================= */
 function spawnHeart(){
   const h=document.createElement("div");
   h.className="heart-float";
