@@ -3,64 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yes… I knew it 💗</title>
+<title>Yes… I knew it 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle,#3a0015,#120007);
-  font-family:'Great Vibes',cursive;
+  background:radial-gradient(circle,#3a0018,#0d0006);
   overflow:hidden;
   color:white;
+  font-family:'Great Vibes',cursive;
 }
 
 /* TITLE */
 h1{
   text-align:center;
-  margin-top:25px;
-  font-size:36px;
+  margin:20px 0;
+  font-size:38px;
   text-shadow:0 0 15px #ff5c8a;
 }
 
-/* HEART AREA */
+/* STAGE */
 #stage{
   position:relative;
   width:100%;
-  height:60vh;
+  height:65vh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* DUDU */
+/* DUDU CENTER */
 #dudu{
   position:absolute;
   width:120px;
-  opacity:0.9;
   z-index:1;
-  filter:drop-shadow(0 0 20px #ff4d6d);
+  filter:drop-shadow(0 0 25px #ff4d6d);
 }
 
 /* GALLERY */
 #gallery{
   position:relative;
-  width:260px;
-  height:260px;
+  width:320px;
+  height:320px;
   z-index:2;
 }
 
+/* PHOTO */
 .photo{
   position:absolute;
-  width:56px;
-  height:56px;
-  border-radius:14px;
+  width:60px;
+  height:60px;
+  border-radius:16px;
   object-fit:cover;
-  box-shadow:0 0 15px #ff4d6d;
+  box-shadow:0 0 14px #ff4d6d;
   opacity:0;
-  transform:scale(0.4);
-  transition:all .6s ease;
+  transform:translate(-50%,-50%) scale(0.6);
+  transition:all .8s ease;
 }
 
 .photo.show{
@@ -78,32 +78,30 @@ h1{
   justify-content:center;
   z-index:10;
 }
-
 #popup img{
-  width:80%;
-  max-width:320px;
+  width:85%;
+  max-width:340px;
   border-radius:20px;
-  box-shadow:0 0 25px #ff4d6d;
+  box-shadow:0 0 30px #ff4d6d;
 }
 
 /* FLOATING HEARTS */
-.heart-float{
+.heart{
   position:absolute;
   bottom:-20px;
-  font-size:18px;
-  animation:float 6s linear infinite;
+  animation:float 7s linear infinite;
   opacity:.7;
 }
 
 @keyframes float{
   0%{transform:translateY(0);opacity:0}
-  20%{opacity:1}
+  15%{opacity:1}
   100%{transform:translateY(-120vh);opacity:0}
 }
 
 @media(max-width:600px){
-  #gallery{width:220px;height:220px;}
-  .photo{width:48px;height:48px;}
+  #gallery{width:260px;height:260px;}
+  .photo{width:52px;height:52px;}
   #dudu{width:100px;}
 }
 </style>
@@ -111,10 +109,10 @@ h1{
 
 <body>
 
-<h1>Yes… I knew it 💖</h1>
+<h1>Yes… I knew it 💕</h1>
 
 <div id="stage">
-  <img id="dudu" src="dudu.gif">
+  <img id="dudu" src="dudu2.gif">
   <div id="gallery"></div>
 </div>
 
@@ -130,26 +128,34 @@ const popup=document.getElementById("popup");
 const popupImg=document.getElementById("popupImg");
 const song=document.getElementById("song");
 
-/* PERFECT CENTER HEART */
+/* HEART SHAPE (CENTER GAP FREE) */
 const heart=[
-[50,6],
-[35,16],[65,16],
-[25,30],[40,30],[60,30],[75,30],
-[20,48],[35,48],[50,48],[65,48],[80,48],
-[30,66],[45,66],[55,66],[70,66],
-[50,86],
+[50,8],
+[35,18],[65,18],
+[25,32],[40,32],[60,32],[75,32],
+[22,50],[35,50],[65,50],[78,50],
+[30,68],[45,68],[55,68],[70,68],
+[50,88],
 [40,78],[60,78]
+];
+
+/* NORMAL START POSITIONS (CIRCLE) */
+const startPos=[
+[50,15],[70,20],[85,35],[85,55],[70,70],
+[50,80],[30,70],[15,55],[15,35],[30,20],
+[40,15],[60,15],[75,25],[80,45],[75,65],
+[60,78],[40,78],[25,65],[20,45]
 ];
 
 let photos=[];
 
-/* STEP 1 – ONE BY ONE */
+/* CREATE PHOTOS */
 for(let i=1;i<=19;i++){
   const img=document.createElement("img");
   img.src=`img${i}.jpg`;
   img.className="photo";
-  img.style.left="50%";
-  img.style.top="50%";
+  img.style.left=startPos[i-1][0]+"%";
+  img.style.top=startPos[i-1][1]+"%";
 
   img.onclick=()=>{
     popupImg.src=img.src;
@@ -159,26 +165,25 @@ for(let i=1;i<=19;i++){
   gallery.appendChild(img);
   photos.push(img);
 
-  setTimeout(()=>{
-    img.classList.add("show");
-  },i*180);
+  setTimeout(()=>img.classList.add("show"),i*160);
 }
 
-/* STEP 2 – HEART FORM */
+/* MOVE TO HEART */
 setTimeout(()=>{
   photos.forEach((img,i)=>{
     img.style.left=heart[i][0]+"%";
     img.style.top=heart[i][1]+"%";
   });
   song.play().catch(()=>{});
-},4500);
+},4200);
 
 /* FLOAT HEARTS */
 setInterval(()=>{
   const h=document.createElement("div");
-  h.className="heart-float";
+  h.className="heart";
   h.innerHTML="❤️";
   h.style.left=Math.random()*100+"%";
+  h.style.fontSize=16+Math.random()*16+"px";
   h.style.animationDuration=4+Math.random()*4+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
@@ -187,4 +192,3 @@ setInterval(()=>{
 
 </body>
 </html>
-
