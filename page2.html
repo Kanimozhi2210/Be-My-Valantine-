@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+/* ================= BASE ================= */
 body{
   margin:0;
   height:100vh;
@@ -16,7 +17,7 @@ body{
   color:pink;
 }
 
-/* floating background hearts */
+/* ================= FLOATING HEARTS ================= */
 .heart-float{
   position:fixed;
   bottom:-20px;
@@ -32,7 +33,7 @@ body{
   100%{transform:translateY(-110vh) scale(1.5);opacity:0}
 }
 
-/* top text */
+/* ================= TOP TEXT ================= */
 .top-text{
   position:absolute;
   top:12%;
@@ -45,14 +46,28 @@ body{
   z-index:3;
 }
 
-/* heart container */
+/* ================= CENTER LOVE ================= */
+.center-love{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Great Vibes',cursive;
+  font-size:90px;
+  color:#ffb6c1;
+  text-shadow:0 0 10px hotpink,0 0 25px crimson,0 0 50px red;
+  z-index:2;
+  pointer-events:none;
+}
+
+/* ================= HEART CONTAINER ================= */
 #heart{
   position:relative;
   width:100%;
   height:100%;
 }
 
-/* image cards */
+/* ================= IMAGE CARDS ================= */
 .pic{
   position:absolute;
   width:70px;
@@ -73,24 +88,67 @@ body{
   transform:scale(2);
   z-index:10;
 }
+
+/* ================= END ACTION ================= */
+.end-action{
+  position:absolute;
+  bottom:6%;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  z-index:5;
+}
+
+.dudu-gif{
+  width:60px;
+  height:auto;
+}
+
+.next-btn{
+  padding:12px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:hotpink;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,105,180,.8);
+  transition:transform .2s ease;
+}
+.next-btn:hover{
+  transform:scale(1.1);
+}
 </style>
 </head>
 
 <body>
 
+<!-- Music -->
 <audio id="bgm" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Texts -->
 <div class="top-text">Yes… I knew it ✨💖</div>
+<div class="center-love">LOVE</div>
+
+<!-- Heart Images -->
 <div id="heart"></div>
 
+<!-- End Button -->
+<div class="end-action">
+  <img src="dudu1.gif" class="dudu-gif" alt="cute gif">
+  <button class="next-btn" onclick="goNext()">Click Me 💖</button>
+</div>
+
 <script>
-/* autoplay fix */
+/* ================= AUTOPLAY FIX ================= */
 const audio=document.getElementById("bgm");
 document.body.addEventListener("click",()=>audio.play(),{once:true});
 
-/* floating hearts */
+/* ================= FLOATING BACKGROUND HEARTS ================= */
 function spawnHeart(){
   const h=document.createElement("div");
   h.className="heart-float";
@@ -102,40 +160,35 @@ function spawnHeart(){
 }
 setInterval(spawnHeart,400);
 
-/* images */
+/* ================= IMAGES ================= */
 const images=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
 const heart=document.getElementById("heart");
 
-/* generate PERFECT heart points */
+/* Heart math formula */
 function generateHeartPoints(n){
-  const points=[];
+  const pts=[];
   for(let i=0;i<n;i++){
     const t=Math.PI*2*i/n;
     const x=16*Math.pow(Math.sin(t),3);
     const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
-    points.push({x,y});
+    pts.push({x,y});
   }
-  return points;
+  return pts;
 }
 
-const heartPoints=generateHeartPoints(images.length);
-
-/* normalize to screen */
 function normalize(points){
-  const xs=points.map(p=>p.x);
-  const ys=points.map(p=>p.y);
+  const xs=points.map(p=>p.x), ys=points.map(p=>p.y);
   const minX=Math.min(...xs), maxX=Math.max(...xs);
   const minY=Math.min(...ys), maxY=Math.max(...ys);
-
   return points.map(p=>({
-    x:((p.x-minX)/(maxX-minX))*40+30, // 30%–70%
-    y:((maxY-p.y)/(maxY-minY))*45+30  // center vertically
+    x:((p.x-minX)/(maxX-minX))*40+30,
+    y:((maxY-p.y)/(maxY-minY))*45+30
   }));
 }
 
-const finalPos=normalize(heartPoints);
+const finalPos=normalize(generateHeartPoints(images.length));
 
-/* random appear → heart arrange */
+/* Random appear → heart arrange */
 images.forEach((src,i)=>{
   const d=document.createElement("div");
   d.className="pic";
@@ -144,7 +197,6 @@ images.forEach((src,i)=>{
   d.appendChild(img);
   heart.appendChild(d);
 
-  /* random appear */
   d.style.left=(Math.random()*80+10)+"%";
   d.style.top=(Math.random()*70+15)+"%";
   d.style.transform="scale(0.4)";
@@ -155,7 +207,6 @@ images.forEach((src,i)=>{
     d.style.transform="scale(1)";
   },i*250);
 
-  /* move to PERFECT heart */
   setTimeout(()=>{
     d.style.left=finalPos[i].x+"%";
     d.style.top=finalPos[i].y+"%";
@@ -163,6 +214,11 @@ images.forEach((src,i)=>{
 
   d.onclick=()=>d.classList.toggle("active");
 });
+
+/* Next page */
+function goNext(){
+  window.location.href="page3.html";
+}
 </script>
 
 </body>
