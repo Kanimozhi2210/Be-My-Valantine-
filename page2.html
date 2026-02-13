@@ -12,12 +12,12 @@
 
 body{
   height:100vh;
-  background:radial-gradient(circle at top,#420000,#0a0000);
+  background:radial-gradient(circle at top,#4b0000,#0b0000);
   overflow:hidden;
   font-family:'Great Vibes',cursive;
 }
 
-/* Heading */
+/* Title */
 h1{
   text-align:center;
   margin-top:25px;
@@ -26,41 +26,41 @@ h1{
   text-shadow:0 0 15px #ff4d88;
 }
 
-/* Floating hearts */
-.heart-float{
+/* Floating background hearts */
+.bg-heart{
   position:absolute;
-  color:rgba(255,80,120,.6);
-  animation:floatUp linear infinite;
+  color:rgba(255,80,120,0.6);
+  animation:float linear infinite;
 }
-@keyframes floatUp{
+@keyframes float{
   0%{transform:translateY(110vh);opacity:0}
   20%{opacity:1}
   100%{transform:translateY(-10vh);opacity:0}
 }
 
-/* Center wrapper */
+/* Center */
 .wrapper{
-  height:100%;
+  height:calc(100vh - 100px);
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* HEART GRID */
+/* HEART */
 .heart{
   position:relative;
-  width:280px;
-  height:260px;
+  width:300px;
+  height:280px;
 }
 
-/* Photo style */
+/* Photo */
 .pic{
   position:absolute;
   width:70px;
   height:70px;
   border-radius:18px;
   overflow:hidden;
-  box-shadow:0 0 20px #ff5f9e;
+  box-shadow:0 0 22px #ff5f9e;
 }
 .pic img{
   width:100%;
@@ -68,27 +68,30 @@ h1{
   object-fit:cover;
 }
 
-/* PERFECT HEART POSITIONS (FIXED) */
-/* Row 1 */
-.p1{top:0; left:70px;}
-.p2{top:0; left:140px;}
+/* --- HEART POSITIONS --- */
+/* Row 1 (SPACE in center) */
+.p1{top:0; left:40px;}
+.p2{top:0; left:190px;}
+
+/* Center photo (between row 1) */
+.pc{top:40px; left:115px;}
 
 /* Row 2 */
-.p3{top:60px; left:0;}
-.p4{top:60px; left:70px;}
-.p5{top:60px; left:140px;}
-.p6{top:60px; left:210px;}
+.p3{top:80px; left:0;}
+.p4{top:80px; left:80px;}
+.p5{top:80px; left:160px;}
+.p6{top:80px; left:240px;}
 
 /* Row 3 */
-.p7{top:120px; left:35px;}
-.p8{top:120px; left:105px;}
-.p9{top:120px; left:175px;}
+.p7{top:150px; left:40px;}
+.p8{top:150px; left:120px;}
+.p9{top:150px; left:200px;}
 
-/* Row 4 (point) */
-.p10{top:190px; left:105px;}
+/* Point */
+.p10{top:215px; left:120px;}
 
 @media(max-width:600px){
-  .heart{transform:scale(1.25)}
+  .heart{transform:scale(1.3)}
 }
 </style>
 </head>
@@ -97,36 +100,54 @@ h1{
 
 <h1>Our Cute Moments ❤️</h1>
 
+<!-- AUDIO -->
+<audio id="song" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
 <div class="wrapper">
   <div class="heart">
 
+    <!-- Row 1 -->
     <div class="pic p1"><img src="img11.png"></div>
     <div class="pic p2"><img src="img12.jpg"></div>
 
-    <div class="pic p3"><img src="img13.jpg"></div>
-    <div class="pic p4"><img src="img14.jpg"></div>
-    <div class="pic p5"><img src="img15.jpg"></div>
-    <div class="pic p6"><img src="img16.jpg"></div>
+    <!-- Center -->
+    <div class="pic pc"><img src="img13.jpg"></div>
 
-    <div class="pic p7"><img src="img17.jpg"></div>
-    <div class="pic p8"><img src="img10.jpg"></div>
-    <div class="pic p9"><img src="img1.jpg"></div>
+    <!-- Row 2 -->
+    <div class="pic p3"><img src="img14.jpg"></div>
+    <div class="pic p4"><img src="img15.jpg"></div>
+    <div class="pic p5"><img src="img16.jpg"></div>
+    <div class="pic p6"><img src="img17.jpg"></div>
 
-    <div class="pic p10"><img src="img18.jpg"></div>
+    <!-- Row 3 -->
+    <div class="pic p7"><img src="img10.jpg"></div>
+    <div class="pic p8"><img src="img1.jpg"></div>
+    <div class="pic p9"><img src="img18.jpg"></div>
+
+    <!-- Bottom -->
+    <div class="pic p10"><img src="img12.jpg"></div>
 
   </div>
 </div>
 
 <script>
-for(let i=0;i<40;i++){
+/* Background floating hearts */
+for(let i=0;i<45;i++){
   const h=document.createElement("div");
-  h.className="heart-float";
+  h.className="bg-heart";
   h.innerHTML="❤";
   h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(10+Math.random()*20)+"px";
-  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.fontSize=(10+Math.random()*25)+"px";
+  h.style.animationDuration=(6+Math.random()*7)+"s";
   document.body.appendChild(h);
 }
+
+/* Mobile autoplay fix */
+document.body.addEventListener("click",()=>{
+  document.getElementById("song").play();
+},{once:true});
 </script>
 
 </body>
