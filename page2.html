@@ -3,85 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moments</title>
+<title>Our Cute Moments</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-/* ===== BACKGROUND (same as first) ===== */
 body{
   margin:0;
   min-height:100vh;
-  background:radial-gradient(circle at top,#4a0000,#000);
-  overflow:hidden;
+  background:radial-gradient(circle at top,#4a0000,#0b0000);
   display:flex;
   flex-direction:column;
   align-items:center;
+  overflow:hidden;
 }
 
 /* ===== FLOATING HEARTS ===== */
-.heart-float{
+.heart{
   position:fixed;
   bottom:-20px;
-  font-size:18px;
+  font-size:16px;
   color:#ff4d6d;
-  animation:floatUp linear infinite;
-  pointer-events:none;
+  animation:float 6s linear infinite;
 }
-@keyframes floatUp{
+@keyframes float{
   0%{transform:translateY(0);opacity:0}
   15%{opacity:1}
   100%{transform:translateY(-110vh);opacity:0}
 }
 
 /* ===== HEADING ===== */
-.heading{
-  margin-top:80px;
+h1{
+  margin-top:60px;
   font-family:'Great Vibes',cursive;
-  font-size:46px;
+  font-size:42px;
   color:#ffd1dc;
-  text-shadow:0 0 10px hotpink,0 0 30px crimson;
+  text-shadow:0 0 10px hotpink,0 0 25px crimson;
 }
 
-/* ===== HEART CONTAINER ===== */
-.heart{
-  position:relative;
-  width:280px;
-  height:260px;
-  margin-top:40px;
+/* ===== IMAGE GRID ===== */
+.grid{
+  margin-top:50px;
+  display:grid;
+  grid-template-columns:repeat(3,90px);
+  grid-template-rows:repeat(3,90px);
+  gap:14px;
+  transform:rotate(45deg);
 }
 
-/* ===== PHOTOS ===== */
-.pic{
-  position:absolute;
-  width:85px;
-  height:85px;
+/* ===== IMAGE STYLE ===== */
+.box{
+  width:90px;
+  height:90px;
   border-radius:22px;
   overflow:hidden;
   box-shadow:0 0 18px hotpink;
+  transform:rotate(-45deg);
 }
-.pic img{
+.box img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* ===== PERFECT CUTE HEART (9 PHOTOS) ===== */
-.p1{ top:0;    left:95px; }
-.p2{ top:20px; left:40px; }
-.p3{ top:20px; left:150px; }
-
-.p4{ top:80px; left:10px; }
-.p5{ top:80px; left:180px; }
-
-.p6{ top:140px; left:55px; }
-.p7{ top:140px; left:125px; }
-
-.p8{ top:195px; left:95px; }
-
-.p9{ top:80px; left:95px; } /* center photo */
-
-/* ===== NEXT ARROW ===== */
+/* ===== NEXT BUTTON ===== */
 .next{
   position:fixed;
   bottom:30px;
@@ -103,40 +88,34 @@ body{
 
 <body>
 
-<div class="heading">Our Cute Moments</div>
+<h1>Our Cute Moments ❤️</h1>
 
-<div class="heart">
-  <div class="pic p1"><img src="img8.jpg"></div>
-  <div class="pic p2"><img src="img11.jpg"></div>
-  <div class="pic p3"><img src="img12.jpg"></div>
+<div class="grid">
+  <div class="box"><img src="img8.jpg"></div>
+  <div class="box"><img src="img11.jpg"></div>
+  <div class="box"><img src="img12.jpg"></div>
 
-  <div class="pic p4"><img src="img13.jpg"></div>
-  <div class="pic p5"><img src="img14.jpg"></div>
+  <div class="box"><img src="img13.jpg"></div>
+  <div class="box"><img src="img14.jpg"></div>
+  <div class="box"><img src="img15.jpg"></div>
 
-  <div class="pic p6"><img src="img15.jpg"></div>
-  <div class="pic p7"><img src="img16.jpg"></div>
-
-  <div class="pic p8"><img src="img17.jpg"></div>
-  <div class="pic p9"><img src="img18.jpg"></div>
+  <div class="box"><img src="img16.jpg"></div>
+  <div class="box"><img src="img17.jpg"></div>
+  <div class="box"><img src="img18.jpg"></div>
 </div>
 
-<div class="next" onclick="goNext()">➜</div>
+<div class="next" onclick="location.href='page3.html'">➜</div>
 
 <script>
-/* floating hearts like first page */
 setInterval(()=>{
   const h=document.createElement("div");
-  h.className="heart-float";
+  h.className="heart";
   h.innerHTML="❤️";
   h.style.left=Math.random()*100+"vw";
   h.style.animationDuration=(4+Math.random()*4)+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },400);
-
-function goNext(){
-  window.location.href="page3.html";
-}
 </script>
 
 </body>
