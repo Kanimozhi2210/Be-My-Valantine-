@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Song ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  background:linear-gradient(180deg,#2b000f,#140008);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* floating hearts */
+.heart{
+  position:fixed;
+  color:#ff4d6d;
+  font-size:14px;
+  animation:float 8s linear infinite;
+  opacity:0.6;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0;}
+  100%{transform:translateY(-10vh);opacity:1;}
+}
+
+/* text section */
+.text-box{
+  max-width:800px;
+  margin:60px auto;
+  padding:20px;
+  font-size:18px;
+  line-height:1.8;
+  text-align:center;
+}
+
+/* player */
+.player{
+  margin:80px auto 120px;
+  text-align:center;
+}
+
+.player h2{
+  font-size:26px;
+  margin-bottom:10px;
+  color:#ffb3c1;
+}
+
+.player p{
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:20px;
+}
+
+/* circular photo */
+.player img{
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #ff4d6d;
+  box-shadow:0 0 25px #ff4d6d;
+}
+
+.rotate{
+  animation:spin 12s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+/* controls */
+.controls{
+  margin-top:25px;
+}
+
+.controls button{
+  background:#ff4d6d;
+  border:none;
+  color:white;
+  padding:12px 18px;
+  margin:0 10px;
+  border-radius:50%;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.controls button:hover{
+  background:#ff758f;
+}
+
+/* spacing */
+.spacer{
+  height:100px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- floating hearts -->
+<script>
+for(let i=0;i<40;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+</script>
+
+<!-- love message -->
+<div class="text-box">
+😊 <b>Aww, happy 5 months 💕!</b><br><br>
+
+This Valentine's Day 🎉 marks our fifth month together, and I'm loving 😍 every moment of it.
+You're the one who makes my days brighter ☀️, my nights warmer 🌃, and my life fuller ❤️.<br><br>
+
+I'm so grateful 🙏 to have you by my side 👫.
+Every moment with you feels like a dream come true 💫.
+Your smile 😊 is my favorite thing to see, and your laugh 😂 is music 🎵 to my ears 👂.<br><br>
+
+You're more than just a partner; you're my best friend 🤝, my confidant 🤐, and my soulmate 💖.
+I love the way you understand me 🧠 and support me 🙌 in everything I do 📚.<br><br>
+
+As we celebrate 🎉 this special day, I want you to know how much you mean to me 💕.
+You're the reason my heart ❤️ skips a beat and I wake up with a smile ☀️.<br><br>
+
+Here's to many more months and years of love ❤️, laughter 😂, and adventures 🌟 together!
+Happy Valentine's Day 🎉 and happy 5 months, my love 💞
+</div>
+
+<div class="spacer"></div>
+
+<!-- music player -->
+<div class="player">
+  <h2>🎧 Our Song</h2>
+  <p>Close your eyes… this one is for you ❤️</p>
+
+  <img id="cover" src="img1.jpg">
+
+  <div class="controls">
+    <button onclick="prevSong()">⏮</button>
+    <button onclick="togglePlay()">⏯</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+
+  <audio id="audio"></audio>
+</div>
+
+<script>
+const songs=[
+  {src:"song1.mp3",img:"img1.jpg"},
+  {src:"song2.mp3",img:"img2.jpg"},
+  {src:"song3.mp3",img:"img3.jpg"},
+  {src:"song4.mp3",img:"img4.jpg"},
+  {src:"song5.mp3",img:"img5.jpg"},
+  {src:"song6.mp3",img:"img6.jpg"},
+  {src:"song7.mp3",img:"img7.jpg"},
+  {src:"song8.mp3",img:"img8.jpg"},
+  {src:"song9.mp3",img:"img9.jpg"},
+  {src:"song10.mp3",img:"img10.jpg"}
+];
+
+let index=0;
+const audio=document.getElementById("audio");
+const cover=document.getElementById("cover");
+
+function loadSong(){
+  audio.src=songs[index].src;
+  cover.src=songs[index].img;
+}
+
+function togglePlay(){
+  if(audio.paused){
+    audio.play();
+    cover.classList.add("rotate");
+  }else{
+    audio.pause();
+    cover.classList.remove("rotate");
+  }
+}
+
+function nextSong(){
+  index=(index+1)%songs.length;
+  loadSong();
+  audio.play();
+  cover.classList.add("rotate");
+}
+
+function prevSong(){
+  index=(index-1+songs.length)%songs.length;
+  loadSong();
+  audio.play();
+  cover.classList.add("rotate");
+}
+
+loadSong();
+</script>
+
+</body>
+</html>
