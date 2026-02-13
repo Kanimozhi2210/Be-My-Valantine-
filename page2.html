@@ -2,159 +2,151 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Cute Moments 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<title>Yes… I Knew It 💖</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family:'Great Vibes', cursive;
 }
 
 body{
-  height:100vh;
-  background: radial-gradient(circle at top, #3b0000, #0b0000);
+  min-height:100vh;
+  background:
+    radial-gradient(circle at center, #3b0015, #0a0005);
   overflow:hidden;
-  font-family: 'Great Vibes', cursive;
-  color:#ffd6e8;
-}
-
-/* ---------- FLOATING HEARTS ---------- */
-.heart-float{
-  position:absolute;
-  color:rgba(255,80,120,0.7);
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp{
-  0%{ transform:translateY(100vh) scale(0.6); opacity:0; }
-  20%{opacity:1;}
-  50%{transform:translateY(50vh) scale(1);}
-  100%{ transform:translateY(-10vh) scale(0.6); opacity:0;}
-}
-
-.heart-float.down{
-  animation: floatDown linear infinite;
-}
-
-@keyframes floatDown{
-  0%{ transform:translateY(-10vh) scale(0.6); opacity:0;}
-  20%{opacity:1;}
-  50%{transform:translateY(50vh) scale(1);}
-  100%{ transform:translateY(110vh) scale(0.6); opacity:0;}
-}
-
-/* ---------- HEADING ---------- */
-h1{
-  text-align:center;
-  margin-top:25px;
-  font-size:42px;
-  text-shadow:0 0 15px #ff4d88;
-}
-
-/* ---------- HEART CONTAINER ---------- */
-.wrapper{
-  position:relative;
-  width:100%;
-  height:100%;
   display:flex;
   justify-content:center;
   align-items:center;
+  color:white;
 }
 
+/* Floating hearts background */
+.heart-bg span{
+  position:absolute;
+  font-size:18px;
+  color:#ff4d6d;
+  animation: float linear infinite;
+  opacity:0.7;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0}
+  50%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* Main container */
+.container{
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+/* Title */
+.title{
+  font-size:42px;
+  margin-bottom:25px;
+  text-shadow:0 0 15px #ff4d6d;
+}
+
+/* Heart collage */
 .heart{
   position:relative;
-  width:320px;
-  height:300px;
+  width:300px;
+  height:270px;
+  margin:auto;
 }
 
-/* ---------- PHOTO STYLE ---------- */
-.pic{
+/* Images */
+.heart img{
   position:absolute;
-  width:72px;
-  height:72px;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 0 20px #ff5f9e;
-  animation:pulse 3s infinite;
-}
-
-.pic img{
-  width:100%;
-  height:100%;
+  width:60px;
+  height:60px;
   object-fit:cover;
+  border-radius:15px;
+  opacity:0;
+  transform:scale(0);
+  transition:all 0.6s ease;
+  box-shadow:0 0 15px #ff4d6d;
+}
+.heart img.show{
+  opacity:1;
+  transform:scale(1);
 }
 
-@keyframes pulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.05);}
-}
-
-/* ---------- PERFECT HEART POSITIONS (9 photos) ---------- */
-
-/* top curve */
-.p1{ top:30px; left:120px; }     /* img11 */
-.p2{ top:55px; left:70px; }      /* img12 */
-.p3{ top:55px; left:170px; }     /* img13 */
-
-/* middle */
-.p4{ top:115px; left:30px; }     /* img14 */
-.p5{ top:115px; left:120px; }    /* img15 */
-.p6{ top:115px; left:210px; }    /* img16 */
-
-/* bottom curve */
-.p7{ top:185px; left:70px; }     /* img17 */
-.p8{ top:185px; left:170px; }    /* img18 */
-
-/* heart tip */
-.p9{ top:235px; left:120px; }    /* img8 */
-
-@media (max-width:600px){
-  .heart{
-    transform:scale(1.25);
-  }
+/* Responsive */
+@media(max-width:600px){
+  .heart{width:260px;height:240px;}
+  .heart img{width:50px;height:50px;}
+  .title{font-size:34px;}
 }
 </style>
 </head>
 
 <body>
 
-<h1>Our Cute Moments 💖</h1>
+<!-- Floating hearts -->
+<div class="heart-bg"></div>
 
-<div class="wrapper">
-  <div class="heart">
+<div class="container">
+  <div class="title">Yes… I knew it 💖</div>
 
-    <div class="pic p1"><img src="images/img11.jpg"></div>
-    <div class="pic p2"><img src="images/img12.jpg"></div>
-    <div class="pic p3"><img src="images/img13.jpg"></div>
-
-    <div class="pic p4"><img src="images/img14.jpg"></div>
-    <div class="pic p5"><img src="images/img15.jpg"></div>
-    <div class="pic p6"><img src="images/img16.jpg"></div>
-
-    <div class="pic p7"><img src="images/img17.jpg"></div>
-    <div class="pic p8"><img src="images/img18.jpg"></div>
-
-    <div class="pic p9"><img src="images/img8.jpg"></div>
-
-  </div>
+  <div class="heart" id="heart"></div>
 </div>
 
-<!-- ---------- MANY FLOATING HEARTS ---------- -->
+<!-- Song -->
+<audio autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+/* Floating background hearts */
+const bg=document.querySelector('.heart-bg');
 for(let i=0;i<40;i++){
-  const h=document.createElement("div");
-  h.className="heart-float"+(i%2?" down":"");
-  h.innerHTML="❤";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(10+Math.random()*20)+"px";
-  h.style.animationDuration=(6+Math.random()*6)+"s";
-  document.body.appendChild(h);
+  const s=document.createElement('span');
+  s.innerHTML='❤';
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDuration=(6+Math.random()*6)+'s';
+  s.style.fontSize=(10+Math.random()*20)+'px';
+  bg.appendChild(s);
 }
+
+/* Images */
+const heart=document.getElementById('heart');
+const total=19;
+
+/* PERFECT HEART SHAPE POSITIONS */
+const pos=[
+[120,0],
+[80,20],[160,20],
+[40,60],[120,60],[200,60],
+[20,110],[80,110],[160,110],[220,110],
+[40,160],[120,160],[200,160],
+[80,210],[160,210],
+[120,250]
+];
+
+/* Add images */
+for(let i=1;i<=total;i++){
+  const img=document.createElement('img');
+  img.src=`img${i}.jpg`;
+  heart.appendChild(img);
+}
+
+/* Animate one by one */
+const imgs=document.querySelectorAll('.heart img');
+imgs.forEach((img,i)=>{
+  setTimeout(()=>{
+    img.style.left=pos[i][0]+'px';
+    img.style.top=pos[i][1]+'px';
+    img.classList.add('show');
+  },i*300);
+});
 </script>
 
 </body>
