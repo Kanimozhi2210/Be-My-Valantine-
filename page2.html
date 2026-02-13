@@ -3,28 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Yes… I knew it 💖</title>
 
-<!-- LOVE FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  height:100vh;
-  background:radial-gradient(circle at top,#3a0018,#120008);
+  min-height:100vh;
+  background:radial-gradient(circle at top,#3b0018,#120008);
   overflow:hidden;
   font-family:'Great Vibes', cursive;
+  color:white;
 }
 
 /* Floating hearts */
 .heart{
   position:absolute;
   color:#ff4d6d;
-  font-size:18px;
   animation:float 12s linear infinite;
-  opacity:.8;
+  opacity:.6;
 }
 @keyframes float{
   from{transform:translateY(110vh);}
@@ -32,12 +30,11 @@ body{
 }
 
 /* Title */
-#title{
+h1{
   text-align:center;
-  color:#fff;
-  font-size:44px;
-  margin-top:20px;
-  text-shadow:0 0 20px #ff4d6d;
+  font-size:42px;
+  margin:20px 0 10px;
+  text-shadow:0 0 25px #ff4d6d;
 }
 
 /* Stage */
@@ -45,132 +42,139 @@ body{
   position:relative;
   width:320px;
   height:320px;
-  margin:30px auto;
+  margin:20px auto;
 }
 
-/* Items */
-.item{
+/* Photo blocks */
+.photo{
   position:absolute;
-  width:60px;
-  height:60px;
+  width:54px;
+  height:54px;
   border-radius:14px;
   overflow:hidden;
   box-shadow:0 0 18px rgba(255,80,120,.8);
   opacity:0;
-  transform:scale(.3);
+  transform:scale(.4);
   transition:all .8s ease;
 }
-.item.show{
+.photo.show{
   opacity:1;
   transform:scale(1);
 }
-.item img{
+.photo img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* Center love text */
-#centerText{
+/* Center dudu */
+#center{
   position:absolute;
   top:130px;
-  left:60px;
-  width:200px;
-  text-align:center;
-  font-size:36px;
-  color:#fff;
+  left:130px;
+  width:60px;
+  height:60px;
   opacity:0;
-  text-shadow:0 0 25px #ff4d6d;
   transition:1.5s;
 }
+#center img{width:100%;}
 
-/* Tap hint */
-#hint{
-  text-align:center;
-  color:#ffd6e0;
-  font-size:18px;
-  opacity:.8;
+/* Zoom modal */
+#zoom{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+#zoom img{
+  width:80vw;
+  max-width:350px;
+  border-radius:18px;
+  box-shadow:0 0 30px #ff4d6d;
 }
 </style>
 </head>
 
 <body>
 
-<div id="title">Yes… I knew it 💖</div>
-<div id="hint">Tap anywhere 💞</div>
+<h1>Yes… I knew it 💖</h1>
 
 <div id="stage">
-  <div id="centerText">LOVE 💕</div>
+  <div id="center"><img src="dudu1.gif"></div>
 </div>
 
-<audio id="song" src="song.mp3" preload="auto"></audio>
+<div id="zoom" onclick="this.style.display='none'">
+  <img id="zoomImg">
+</div>
+
+<audio id="song" src="song.mp3"></audio>
 
 <script>
-/* Floating background hearts */
+/* Floating hearts */
 for(let i=0;i<30;i++){
-  let h=document.createElement('div');
+  const h=document.createElement('div');
   h.className='heart';
   h.innerHTML='❤';
   h.style.left=Math.random()*100+'vw';
-  h.style.fontSize=12+Math.random()*22+'px';
+  h.style.fontSize=12+Math.random()*20+'px';
   h.style.animationDuration=8+Math.random()*10+'s';
   document.body.appendChild(h);
 }
 
-/* ITEMS (21 photos + 22 dudu gifs) */
+/* Photos + dudu mix */
 const items=[];
 for(let i=1;i<=21;i++){
-  items.push({type:'img',src:`img${i}.jpg`});
-  if(i<=22) items.push({type:'dudu',src:`dudu${i}.gif`});
+  items.push(`img${i}.jpg`);
+  items.push(`dudu${i}.gif`);
 }
 
-/* HEART POSITIONS (perfect mobile-safe) */
-const pos=[
-[160,10],[200,30],[240,70],[270,120],[260,170],
-[230,210],[200,240],[160,260],[120,240],[90,210],
-[60,170],[50,120],[80,70],[120,30],
-[140,60],[180,60],[200,90],[180,120],
-[160,140],[140,120],[120,90],
-[100,120],[120,160],[160,190],[200,160],
-[220,120],[200,90]
+/* Perfect heart positions */
+const heartPos=[
+[132,10],[178,22],[216,52],[242,92],[232,142],
+[198,182],[162,212],[132,230],[102,212],[66,182],
+[32,142],[22,92],[48,52],[86,22]
 ];
 
-/* State */
-let index=0;
-let placed=[];
-
+/* Stage logic */
 const stage=document.getElementById('stage');
 const song=document.getElementById('song');
+let i=0;
 
-/* Create item */
-function createItem(data){
-  const d=document.createElement('div');
-  d.className='item';
-  d.innerHTML=`<img src="${data.src}">`;
-  stage.appendChild(d);
-  return d;
-}
+/* Step 1: show one-by-one */
+const interval=setInterval(()=>{
+  if(i<heartPos.length){
+    const d=document.createElement('div');
+    d.className='photo';
+    d.innerHTML=`<img src="${items[i]}">`;
+    stage.appendChild(d);
 
-/* Next item on tap */
-function next(){
-  if(index<items.length && index<pos.length){
-    const it=createItem(items[index]);
-    const [x,y]=pos[index];
-    setTimeout(()=>{
-      it.style.left=x+'px';
-      it.style.top=y+'px';
-      it.classList.add('show');
-    },50);
-    placed.push(it);
-    index++;
+    d.onclick=()=>{
+      document.getElementById('zoomImg').src=items[i];
+      document.getElementById('zoom').style.display='flex';
+    };
+
+    setTimeout(()=>d.classList.add('show'),50);
+    i++;
   }else{
-    document.getElementById('centerText').style.opacity=1;
-    song.play();
-    document.body.onclick=null;
+    clearInterval(interval);
+    arrangeHeart();
   }
-}
+},600);
 
-document.body.onclick=next;
+/* Step 2: arrange heart */
+function arrangeHeart(){
+  const photos=document.querySelectorAll('.photo');
+  photos.forEach((p,idx)=>{
+    const [x,y]=heartPos[idx];
+    p.style.left=x+'px';
+    p.style.top=y+'px';
+  });
+  document.getElementById('center').style.opacity=1;
+  song.play();
+}
 </script>
 
 </body>
