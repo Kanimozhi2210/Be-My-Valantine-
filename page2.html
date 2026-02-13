@@ -2,151 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Yes… I knew it 💖</title>
+
+<!-- LOVE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle,#5a001a,#1a0008);
-  font-family:'Segoe Script', cursive;
+  height:100vh;
+  background:radial-gradient(circle at top,#3a0018,#120008);
   overflow:hidden;
-  color:white;
+  font-family:'Great Vibes', cursive;
 }
 
-h1{
-  text-align:center;
-  margin-top:30px;
-  font-size:38px;
-  text-shadow:0 0 15px pink;
-}
-
-/* HEART GRID */
+/* Floating hearts */
 .heart{
-  width:360px;
-  margin:40px auto;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
+  position:absolute;
+  color:#ff4d6d;
+  font-size:18px;
+  animation:float 12s linear infinite;
+  opacity:.8;
+}
+@keyframes float{
+  from{transform:translateY(110vh);}
+  to{transform:translateY(-10vh);}
 }
 
-/* PHOTO */
-.photo{
-  width:100%;
-  aspect-ratio:1/1;
-  border-radius:18px;
+/* Title */
+#title{
+  text-align:center;
+  color:#fff;
+  font-size:44px;
+  margin-top:20px;
+  text-shadow:0 0 20px #ff4d6d;
+}
+
+/* Stage */
+#stage{
+  position:relative;
+  width:320px;
+  height:320px;
+  margin:30px auto;
+}
+
+/* Items */
+.item{
+  position:absolute;
+  width:60px;
+  height:60px;
+  border-radius:14px;
   overflow:hidden;
-  box-shadow:0 0 15px rgba(255,100,150,.6);
+  box-shadow:0 0 18px rgba(255,80,120,.8);
   opacity:0;
-  transform:scale(.5);
-  animation:show 0.6s forwards;
+  transform:scale(.3);
+  transition:all .8s ease;
 }
-
-.photo img{
+.item.show{
+  opacity:1;
+  transform:scale(1);
+}
+.item img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* EMPTY CELLS */
-.empty{
-  visibility:hidden;
+/* Center love text */
+#centerText{
+  position:absolute;
+  top:130px;
+  left:60px;
+  width:200px;
+  text-align:center;
+  font-size:36px;
+  color:#fff;
+  opacity:0;
+  text-shadow:0 0 25px #ff4d6d;
+  transition:1.5s;
 }
 
-/* CENTER DUDU */
-.center{
-  grid-column:3;
-  grid-row:3;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.center img{
-  width:100px;
-}
-
-/* ANIMATION */
-@keyframes show{
-  to{opacity:1; transform:scale(1);}
-}
-
-/* FLOATING HEARTS */
-.heart-float{
-  position:fixed;
-  bottom:-20px;
-  color:pink;
-  animation:float 6s linear infinite;
-}
-@keyframes float{
-  to{transform:translateY(-110vh); opacity:0;}
+/* Tap hint */
+#hint{
+  text-align:center;
+  color:#ffd6e0;
+  font-size:18px;
+  opacity:.8;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Yes… I knew it 💖</h1>
+<div id="title">Yes… I knew it 💖</div>
+<div id="hint">Tap anywhere 💞</div>
 
-<div class="heart">
-  <!-- ROW 1 -->
-  <div class="empty"></div>
-  <div class="photo"><img src="img1.jpg"></div>
-  <div class="photo"><img src="img2.jpg"></div>
-  <div class="photo"><img src="img3.jpg"></div>
-  <div class="empty"></div>
-
-  <!-- ROW 2 -->
-  <div class="photo"><img src="img4.jpg"></div>
-  <div class="photo"><img src="img5.jpg"></div>
-  <div class="photo"><img src="img6.jpg"></div>
-  <div class="photo"><img src="img7.jpg"></div>
-  <div class="photo"><img src="img8.jpg"></div>
-
-  <!-- ROW 3 -->
-  <div class="photo"><img src="img9.jpg"></div>
-  <div class="photo"><img src="img10.jpg"></div>
-
-  <div class="center">
-    <img src="dudu.gif">
-  </div>
-
-  <div class="photo"><img src="img11.jpg"></div>
-  <div class="photo"><img src="img12.jpg"></div>
-
-  <!-- ROW 4 -->
-  <div class="photo"><img src="img13.jpg"></div>
-  <div class="photo"><img src="img14.jpg"></div>
-  <div class="photo"><img src="img15.jpg"></div>
-  <div class="photo"><img src="img16.jpg"></div>
-  <div class="photo"><img src="img17.jpg"></div>
-
-  <!-- ROW 5 -->
-  <div class="empty"></div>
-  <div class="photo"><img src="img18.jpg"></div>
-  <div class="photo"><img src="img19.jpg"></div>
-  <div class="photo"><img src="img20.jpg"></div>
-  <div class="empty"></div>
+<div id="stage">
+  <div id="centerText">LOVE 💕</div>
 </div>
 
-<audio autoplay loop>
-  <source src="song.mp3" type="audio/mpeg">
-</audio>
+<audio id="song" src="song.mp3" preload="auto"></audio>
 
 <script>
-/* PHOTO ONE BY ONE */
-document.querySelectorAll('.photo').forEach((p,i)=>{
-  p.style.animationDelay=`${i*0.15}s`;
-});
-
-/* FLOATING HEARTS */
-setInterval(()=>{
+/* Floating background hearts */
+for(let i=0;i<30;i++){
   let h=document.createElement('div');
-  h.className='heart-float';
-  h.innerHTML='❤️';
+  h.className='heart';
+  h.innerHTML='❤';
   h.style.left=Math.random()*100+'vw';
-  h.style.fontSize=(12+Math.random()*20)+'px';
+  h.style.fontSize=12+Math.random()*22+'px';
+  h.style.animationDuration=8+Math.random()*10+'s';
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-},400);
+}
+
+/* ITEMS (21 photos + 22 dudu gifs) */
+const items=[];
+for(let i=1;i<=21;i++){
+  items.push({type:'img',src:`img${i}.jpg`});
+  if(i<=22) items.push({type:'dudu',src:`dudu${i}.gif`});
+}
+
+/* HEART POSITIONS (perfect mobile-safe) */
+const pos=[
+[160,10],[200,30],[240,70],[270,120],[260,170],
+[230,210],[200,240],[160,260],[120,240],[90,210],
+[60,170],[50,120],[80,70],[120,30],
+[140,60],[180,60],[200,90],[180,120],
+[160,140],[140,120],[120,90],
+[100,120],[120,160],[160,190],[200,160],
+[220,120],[200,90]
+];
+
+/* State */
+let index=0;
+let placed=[];
+
+const stage=document.getElementById('stage');
+const song=document.getElementById('song');
+
+/* Create item */
+function createItem(data){
+  const d=document.createElement('div');
+  d.className='item';
+  d.innerHTML=`<img src="${data.src}">`;
+  stage.appendChild(d);
+  return d;
+}
+
+/* Next item on tap */
+function next(){
+  if(index<items.length && index<pos.length){
+    const it=createItem(items[index]);
+    const [x,y]=pos[index];
+    setTimeout(()=>{
+      it.style.left=x+'px';
+      it.style.top=y+'px';
+      it.classList.add('show');
+    },50);
+    placed.push(it);
+    index++;
+  }else{
+    document.getElementById('centerText').style.opacity=1;
+    song.play();
+    document.body.onclick=null;
+  }
+}
+
+document.body.onclick=next;
 </script>
 
 </body>
