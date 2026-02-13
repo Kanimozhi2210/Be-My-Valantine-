@@ -2,179 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yes… I knew it 💖</title>
+<title>LOVE ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body{
-  margin:0;
-  min-height:100vh;
-  background:radial-gradient(circle at top,#3b0018,#120008);
-  overflow:hidden;
-  font-family:'Great Vibes', cursive;
-  color:white;
+  margin:0;height:100vh;overflow:hidden;
+  background:radial-gradient(#300000,#000);
+  color:pink;
 }
 
-/* Floating hearts */
-.heart{
-  position:absolute;
-  color:#ff4d6d;
-  animation:float 12s linear infinite;
-  opacity:.6;
+/* PAGE 1 */
+#page1{
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  height:100vh;font-family:cursive;
 }
-@keyframes float{
-  from{transform:translateY(110vh);}
-  to{transform:translateY(-10vh);}
-}
-
-/* Title */
-h1{
-  text-align:center;
-  font-size:42px;
-  margin:20px 0 10px;
-  text-shadow:0 0 25px #ff4d6d;
+#yesBtn{
+  margin-top:20px;padding:15px 35px;
+  font-size:20px;border:none;border-radius:30px;
+  background:hotpink;color:#fff;cursor:pointer;
 }
 
-/* Stage */
-#stage{
-  position:relative;
-  width:320px;
-  height:320px;
-  margin:20px auto;
+/* PAGE 2 */
+#page2{display:none;position:relative;width:100%;height:100%}
+
+/* CENTER TEXT */
+.center-text{
+  position:absolute;top:42%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Great Vibes',cursive;
+  font-size:90px;color:#ffb6c1;
+  text-shadow:0 0 10px red,0 0 25px hotpink,0 0 45px crimson;
+  z-index:2;
 }
 
-/* Photo blocks */
-.photo{
-  position:absolute;
-  width:54px;
-  height:54px;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 0 18px rgba(255,80,120,.8);
-  opacity:0;
-  transform:scale(.4);
-  transition:all .8s ease;
+/* IMAGES */
+.pic{
+  position:absolute;width:70px;height:70px;
+  border-radius:15px;overflow:hidden;
+  opacity:0;transition:all .8s ease;
+  cursor:pointer;
 }
-.photo.show{
-  opacity:1;
-  transform:scale(1);
-}
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* Center dudu */
-#center{
-  position:absolute;
-  top:130px;
-  left:130px;
-  width:60px;
-  height:60px;
-  opacity:0;
-  transition:1.5s;
-}
-#center img{width:100%;}
-
-/* Zoom modal */
-#zoom{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-}
-#zoom img{
-  width:80vw;
-  max-width:350px;
-  border-radius:18px;
-  box-shadow:0 0 30px #ff4d6d;
-}
+.pic img{width:100%;height:100%;object-fit:cover}
+.pic.active{transform:scale(2);z-index:10}
 </style>
 </head>
 
 <body>
 
-<h1>Yes… I knew it 💖</h1>
-
-<div id="stage">
-  <div id="center"><img src="dudu1.gif"></div>
+<!-- PAGE 1 -->
+<div id="page1">
+  <h1>Will you be my Valentine? 💌</h1>
+  <button id="yesBtn">Yes ❤️</button>
 </div>
 
-<div id="zoom" onclick="this.style.display='none'">
-  <img id="zoomImg">
-</div>
+<!-- PAGE 2 -->
+<div id="page2">
+  <audio id="bgm" loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
 
-<audio id="song" src="song.mp3"></audio>
+  <div class="center-text">LOVE</div>
+  <div id="heart"></div>
+</div>
 
 <script>
-/* Floating hearts */
-for(let i=0;i<30;i++){
-  const h=document.createElement('div');
-  h.className='heart';
-  h.innerHTML='❤';
-  h.style.left=Math.random()*100+'vw';
-  h.style.fontSize=12+Math.random()*20+'px';
-  h.style.animationDuration=8+Math.random()*10+'s';
-  document.body.appendChild(h);
-}
+const yesBtn = document.getElementById("yesBtn");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const heart = document.getElementById("heart");
+const audio = document.getElementById("bgm");
 
-/* Photos + dudu mix */
-const items=[];
-for(let i=1;i<=21;i++){
-  items.push(`img${i}.jpg`);
-  items.push(`dudu${i}.gif`);
-}
+/* 19 images (same folder) */
+const images = Array.from({length:19}, (_,i)=>`img${i+1}.jpg`);
 
-/* Perfect heart positions */
-const heartPos=[
-[132,10],[178,22],[216,52],[242,92],[232,142],
-[198,182],[162,212],[132,230],[102,212],[66,182],
-[32,142],[22,92],[48,52],[86,22]
+/* 19 heart positions */
+const positions = [
+  [50,16],
+  [42,20],[58,20],
+  [35,26],[65,26],
+  [30,35],[70,35],
+  [28,45],[72,45],
+  [30,55],[70,55],
+  [36,64],[64,64],
+  [42,72],[58,72],
+  [48,80],[52,80],
+  [46,88],[54,88]
 ];
 
-/* Stage logic */
-const stage=document.getElementById('stage');
-const song=document.getElementById('song');
-let i=0;
+yesBtn.onclick = () => {
+  page1.style.display="none";
+  page2.style.display="block";
+  audio.play();
 
-/* Step 1: show one-by-one */
-const interval=setInterval(()=>{
-  if(i<heartPos.length){
-    const d=document.createElement('div');
-    d.className='photo';
-    d.innerHTML=`<img src="${items[i]}">`;
-    stage.appendChild(d);
+  images.forEach((src,i)=>{
+    const div=document.createElement("div");
+    div.className="pic";
+    const img=document.createElement("img");
+    img.src=src;
+    div.appendChild(img);
+    heart.appendChild(div);
 
-    d.onclick=()=>{
-      document.getElementById('zoomImg').src=items[i];
-      document.getElementById('zoom').style.display='flex';
-    };
+    setTimeout(()=>{
+      div.style.left = positions[i][0] + "%";
+      div.style.top  = positions[i][1] + "%";
+      div.style.opacity = 1;
+    }, i*350);
 
-    setTimeout(()=>d.classList.add('show'),50);
-    i++;
-  }else{
-    clearInterval(interval);
-    arrangeHeart();
-  }
-},600);
-
-/* Step 2: arrange heart */
-function arrangeHeart(){
-  const photos=document.querySelectorAll('.photo');
-  photos.forEach((p,idx)=>{
-    const [x,y]=heartPos[idx];
-    p.style.left=x+'px';
-    p.style.top=y+'px';
+    div.onclick = ()=>div.classList.toggle("active");
   });
-  document.getElementById('center').style.opacity=1;
-  song.play();
-}
+};
 </script>
 
 </body>
