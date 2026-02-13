@@ -16,20 +16,21 @@ body{
   flex-direction:column;
   align-items:center;
   overflow:hidden;
+  color:white;
 }
 
 /* ===== FLOATING HEARTS ===== */
 .heart{
   position:fixed;
   bottom:-20px;
-  font-size:16px;
   color:#ff4d6d;
-  animation:float 6s linear infinite;
+  animation:float 7s linear infinite;
+  font-size:14px;
 }
 @keyframes float{
   0%{transform:translateY(0);opacity:0}
-  15%{opacity:1}
-  100%{transform:translateY(-110vh);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-120vh);opacity:0}
 }
 
 /* ===== HEADING ===== */
@@ -41,26 +42,24 @@ h1{
   text-shadow:0 0 10px hotpink,0 0 25px crimson;
 }
 
-/* ===== IMAGE GRID ===== */
-.grid{
-  margin-top:50px;
-  display:grid;
-  grid-template-columns:repeat(3,90px);
-  grid-template-rows:repeat(3,90px);
-  gap:14px;
-  transform:rotate(45deg);
+/* ===== HEART CONTAINER ===== */
+.heart-wrap{
+  position:relative;
+  width:320px;
+  height:280px;
+  margin-top:40px;
 }
 
 /* ===== IMAGE STYLE ===== */
-.box{
-  width:90px;
-  height:90px;
-  border-radius:22px;
+.pic{
+  position:absolute;
+  width:80px;
+  height:80px;
+  border-radius:20px;
   overflow:hidden;
   box-shadow:0 0 18px hotpink;
-  transform:rotate(-45deg);
 }
-.box img{
+.pic img{
   width:100%;
   height:100%;
   object-fit:cover;
@@ -90,18 +89,27 @@ h1{
 
 <h1>Our Cute Moments ❤️</h1>
 
-<div class="grid">
-  <div class="box"><img src="img8.jpg"></div>
-  <div class="box"><img src="img11.jpg"></div>
-  <div class="box"><img src="img12.jpg"></div>
+<div class="heart-wrap">
 
-  <div class="box"><img src="img13.jpg"></div>
-  <div class="box"><img src="img14.jpg"></div>
-  <div class="box"><img src="img15.jpg"></div>
+  <!-- TOP -->
+  <div class="pic" style="top:0; left:120px;"><img src="img8.jpg"></div>
 
-  <div class="box"><img src="img16.jpg"></div>
-  <div class="box"><img src="img17.jpg"></div>
-  <div class="box"><img src="img18.jpg"></div>
+  <!-- UPPER -->
+  <div class="pic" style="top:50px; left:40px;"><img src="img11.jpg"></div>
+  <div class="pic" style="top:50px; left:200px;"><img src="img12.jpg"></div>
+
+  <!-- MIDDLE -->
+  <div class="pic" style="top:120px; left:0;"><img src="img13.jpg"></div>
+  <div class="pic" style="top:120px; left:120px;"><img src="img14.jpg"></div>
+  <div class="pic" style="top:120px; left:240px;"><img src="img15.jpg"></div>
+
+  <!-- LOWER -->
+  <div class="pic" style="top:190px; left:60px;"><img src="img16.jpg"></div>
+  <div class="pic" style="top:190px; left:180px;"><img src="img17.jpg"></div>
+
+  <!-- BOTTOM -->
+  <div class="pic" style="top:240px; left:120px;"><img src="img18.jpg"></div>
+
 </div>
 
 <div class="next" onclick="location.href='page3.html'">➜</div>
@@ -114,8 +122,8 @@ setInterval(()=>{
   h.style.left=Math.random()*100+"vw";
   h.style.animationDuration=(4+Math.random()*4)+"s";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),8000);
-},400);
+  setTimeout(()=>h.remove(),9000);
+},350);
 </script>
 
 </body>
