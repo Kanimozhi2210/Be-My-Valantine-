@@ -4,21 +4,19 @@
 <meta charset="UTF-8">
 <title>Yes… I knew it ❤️</title>
 
-<!-- Romantic cursive font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BASE ================= */
 body{
   margin:0;
   height:100vh;
   overflow:hidden;
   background:radial-gradient(circle at top,#3b0000,#000);
-  color:pink;
   font-family:cursive;
+  color:pink;
 }
 
-/* ================= FLOATING BACKGROUND HEARTS ================= */
+/* floating background hearts */
 .heart-float{
   position:fixed;
   bottom:-20px;
@@ -34,10 +32,10 @@ body{
   100%{transform:translateY(-110vh) scale(1.5);opacity:0}
 }
 
-/* ================= TOP TEXT ================= */
+/* top text */
 .top-text{
   position:absolute;
-  top:15%;
+  top:12%;
   width:100%;
   text-align:center;
   font-family:'Great Vibes',cursive;
@@ -47,14 +45,14 @@ body{
   z-index:3;
 }
 
-/* ================= HEART CONTAINER ================= */
+/* heart container */
 #heart{
   position:relative;
   width:100%;
   height:100%;
 }
 
-/* ================= IMAGE CARDS ================= */
+/* image cards */
 .pic{
   position:absolute;
   width:70px;
@@ -62,7 +60,7 @@ body{
   border-radius:16px;
   overflow:hidden;
   opacity:0;
-  transition:all .9s ease;
+  transition:all 1s ease;
   cursor:pointer;
   box-shadow:0 0 15px rgba(255,105,180,.6);
 }
@@ -80,23 +78,19 @@ body{
 
 <body>
 
-<!-- Background music -->
 <audio id="bgm" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Text -->
 <div class="top-text">Yes… I knew it ✨💖</div>
-
-<!-- Heart images -->
 <div id="heart"></div>
 
 <script>
-/* ================= AUTOPLAY FIX ================= */
+/* autoplay fix */
 const audio=document.getElementById("bgm");
 document.body.addEventListener("click",()=>audio.play(),{once:true});
 
-/* ================= FLOATING HEARTS ================= */
+/* floating hearts */
 function spawnHeart(){
   const h=document.createElement("div");
   h.className="heart-float";
@@ -108,63 +102,65 @@ function spawnHeart(){
 }
 setInterval(spawnHeart,400);
 
-/* ================= IMAGES ================= */
+/* images */
 const images=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
-
-/* Final heart positions */
-const heartPositions=[
-[50,16],
-[42,20],[58,20],
-[35,26],[65,26],
-[30,35],[70,35],
-[28,45],[72,45],
-[30,55],[70,55],
-[36,64],[64,64],
-[42,72],[58,72],
-[48,80],[52,80],
-[46,88],[54,88]
-];
-
-/* Random position helper */
-function randomPos(){
-  return {
-    x:Math.random()*80+10,
-    y:Math.random()*70+15
-  };
-}
-
 const heart=document.getElementById("heart");
 
-/* ================= MAIN ANIMATION ================= */
+/* generate PERFECT heart points */
+function generateHeartPoints(n){
+  const points=[];
+  for(let i=0;i<n;i++){
+    const t=Math.PI*2*i/n;
+    const x=16*Math.pow(Math.sin(t),3);
+    const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    points.push({x,y});
+  }
+  return points;
+}
+
+const heartPoints=generateHeartPoints(images.length);
+
+/* normalize to screen */
+function normalize(points){
+  const xs=points.map(p=>p.x);
+  const ys=points.map(p=>p.y);
+  const minX=Math.min(...xs), maxX=Math.max(...xs);
+  const minY=Math.min(...ys), maxY=Math.max(...ys);
+
+  return points.map(p=>({
+    x:((p.x-minX)/(maxX-minX))*40+30, // 30%–70%
+    y:((maxY-p.y)/(maxY-minY))*45+30  // center vertically
+  }));
+}
+
+const finalPos=normalize(heartPoints);
+
+/* random appear → heart arrange */
 images.forEach((src,i)=>{
   const d=document.createElement("div");
   d.className="pic";
-
   const img=document.createElement("img");
   img.src=src;
-
   d.appendChild(img);
   heart.appendChild(d);
 
-  /* STEP 1: random appear */
-  const r=randomPos();
-  d.style.left=r.x+"%";
-  d.style.top=r.y+"%";
+  /* random appear */
+  d.style.left=(Math.random()*80+10)+"%";
+  d.style.top=(Math.random()*70+15)+"%";
   d.style.transform="scale(0.4)";
   d.style.opacity=0;
 
   setTimeout(()=>{
     d.style.opacity=1;
     d.style.transform="scale(1)";
-  },i*300);
+  },i*250);
 
-  /* STEP 2: move to heart shape */
+  /* move to PERFECT heart */
   setTimeout(()=>{
-    d.style.left=heartPositions[i][0]+"%";
-    d.style.top=heartPositions[i][1]+"%";
-  },2000+i*200);
+    d.style.left=finalPos[i].x+"%";
+    d.style.top=finalPos[i].y+"%";
+  },1800+i*180);
 
-  /* Zoom on touch */
   d.onclick=()=>d.classList.toggle("active");
 });
 </script>
