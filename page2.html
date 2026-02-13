@@ -3,259 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yes… I knew it ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<title>❤️</title>
 
 <style>
-/* ========== BASE ========== */
 body{
   margin:0;
   min-height:100vh;
   background:radial-gradient(circle at top,#4a0000,#000);
-  overflow-x:hidden;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-/* ========== LIGHTS ========== */
-.lights{
-  position:fixed;
-  top:0;
-  width:100%;
-  height:90px;
-  z-index:10;
-}
-.bulb{
-  position:absolute;
-  top:28px;
-  width:7px;
-  height:7px;
-  background:#ffd1dc;
-  border-radius:50%;
-  box-shadow:0 0 14px hotpink;
-  animation:blink 2s infinite alternate;
-}
-@keyframes blink{from{opacity:.3}to{opacity:1}}
-
-/* ========== FLOATING HEARTS ========== */
-.heart-float{
-  position:fixed;
-  bottom:-20px;
-  font-size:18px;
-  color:#ff4d6d;
-  animation:floatUp linear infinite;
-  pointer-events:none;
-}
-@keyframes floatUp{
-  0%{transform:translateY(0);opacity:0}
-  15%{opacity:1}
-  100%{transform:translateY(-110vh);opacity:0}
-}
-
-/* ========== TOP TEXT ========== */
-.top-text{
-  margin-top:95px;          /* 🔥 INNUM KEELA */
-  font-family:'Great Vibes',cursive;
-  font-size:44px;
-  color:#ffd1dc;
-  text-shadow:0 0 12px hotpink,0 0 30px crimson;
-  text-align:center;
-}
-
-/* ========== CENTER AREA ========== */
-.center-wrapper{
-  flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
-  width:100%;
+  overflow:hidden;
 }
 
-/* ========== HEART ========== */
-.heart-wrapper{
+/* ===== HEART CONTAINER ===== */
+.heart{
   position:relative;
-  width:100vw;              /* 🔥 MOBILE FULL WIDTH */
-  max-width:520px;
+  width:90vw;
+  max-width:360px;
   aspect-ratio:1/1;
-  animation:pulse 2.8s infinite;
-}
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.04)}
-  100%{transform:scale(1)}
 }
 
-/* ========== LOVE TEXT ========== */
-.center-love{
-  position:absolute;
-  top:60%;                  /* 🔥 LOWER */
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Great Vibes',cursive;
-  font-size:92px;
-  color:#ffb6c1;
-  text-shadow:0 0 14px hotpink,0 0 30px crimson;
-  opacity:.85;
-  z-index:1;
-  pointer-events:none;
-}
-
-/* ========== PHOTOS ========== */
+/* ===== PHOTOS ===== */
 .pic{
   position:absolute;
-  width:118px;
-  height:118px;
-  border-radius:26px;
+  width:90px;
+  height:90px;
+  border-radius:22px;
   overflow:hidden;
-  opacity:0;
-  box-shadow:0 0 22px hotpink;
-  transition:all 1s ease;
-  animation:gentleRotate 6s ease-in-out infinite alternate;
-}
-@keyframes gentleRotate{
-  from{transform:rotate(-2deg)}
-  to{transform:rotate(2deg)}
+  box-shadow:0 0 18px hotpink;
 }
 .pic img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-.pic.active{
-  transform:scale(1.7);
-  z-index:20;
-}
 
-/* ========== SIDE BUTTON ========== */
-.side-action{
+/* ===== HEART SHAPE (9 PHOTOS) ===== */
+.p1{ top:0%;   left:35%; }
+.p2{ top:8%;   left:15%; }
+.p3{ top:8%;   left:55%; }
+
+.p4{ top:28%;  left:5%;  }
+.p5{ top:28%;  left:65%; }
+
+.p6{ top:52%;  left:18%; }
+.p7{ top:52%;  left:52%; }
+
+.p8{ top:72%;  left:35%; }
+
+.p9{ top:40%;  left:35%; }
+
+/* ===== NEXT ARROW ===== */
+.next{
   position:fixed;
-  right:14px;
-  bottom:22%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
-.dudu-gif{width:78px}
-.next-btn{
-  padding:16px 34px;
-  font-size:20px;
-  border:none;
-  border-radius:30px;
+  bottom:30px;
+  right:30px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
   background:hotpink;
   color:white;
-  box-shadow:0 0 24px hotpink;
-}
-
-/* ========== DESKTOP SAFE ========== */
-@media(min-width:768px){
-  .top-text{font-size:54px;margin-top:90px}
-  .center-love{font-size:108px}
-  .pic{width:130px;height:130px}
+  font-size:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 0 20px hotpink;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgm" loop>
-  <source src="song.mp3" type="audio/mpeg">
-</audio>
+<div class="heart">
+  <div class="pic p1"><img src="img8.jpg"></div>
+  <div class="pic p2"><img src="img11.jpg"></div>
+  <div class="pic p3"><img src="img12.jpg"></div>
 
-<div class="lights">
-  <div class="bulb" style="left:10%"></div>
-  <div class="bulb" style="left:25%"></div>
-  <div class="bulb" style="left:40%"></div>
-  <div class="bulb" style="left:55%"></div>
-  <div class="bulb" style="left:70%"></div>
-  <div class="bulb" style="left:85%"></div>
+  <div class="pic p4"><img src="img13.jpg"></div>
+  <div class="pic p5"><img src="img14.jpg"></div>
+
+  <div class="pic p6"><img src="img15.jpg"></div>
+  <div class="pic p7"><img src="img16.jpg"></div>
+
+  <div class="pic p8"><img src="img17.jpg"></div>
+  <div class="pic p9"><img src="img18.jpg"></div>
 </div>
 
-<div class="top-text">Yes… I knew it ✨💖</div>
-
-<div class="center-wrapper">
-  <div class="heart-wrapper" id="heart">
-    <div class="center-love">LOVE</div>
-  </div>
-</div>
-
-<div class="side-action">
-  <img src="dudu1.gif" class="dudu-gif">
-  <button class="next-btn" onclick="goNext()">Click 💖</button>
-</div>
+<div class="next" onclick="nextPage()">➜</div>
 
 <script>
-/* autoplay */
-document.addEventListener("touchstart",()=>{
-  document.getElementById("bgm").play().catch(()=>{});
-},{once:true});
-
-/* floating hearts */
-setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart-float";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(4+Math.random()*4)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),8000);
-},450);
-
-/* images */
-const imgs=Array.from({length:19},(_,i)=>`img${i+1}.jpg`);
-const heart=document.getElementById("heart");
-
-function heartPoints(n){
-  const p=[];
-  for(let i=0;i<n;i++){
-    const t=Math.PI*2*i/n;
-    p.push({
-      x:16*Math.sin(t)**3,
-      y:13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t)
-    });
-  }
-  return p;
-}
-function normalize(p){
-  const xs=p.map(e=>e.x), ys=p.map(e=>e.y);
-  const minX=Math.min(...xs),maxX=Math.max(...xs);
-  const minY=Math.min(...ys),maxY=Math.max(...ys);
-  return p.map(e=>({
-    x:(e.x-minX)/(maxX-minX)*100,
-    y:(maxY-e.y)/(maxY-minY)*100
-  }));
-}
-const pos=normalize(heartPoints(imgs.length));
-
-imgs.forEach((src,i)=>{
-  const d=document.createElement("div");
-  d.className="pic";
-  d.innerHTML=`<img src="${src}">`;
-  heart.appendChild(d);
-
-  d.style.left="50%";
-  d.style.top="50%";
-  d.style.opacity=0;
-
-  setTimeout(()=>{
-    d.style.opacity=1;
-  },i*200);
-
-  setTimeout(()=>{
-    d.style.left=pos[i].x+"%";
-    d.style.top=pos[i].y+"%";
-  },1400+i*140);
-
-  d.onclick=()=>d.classList.toggle("active");
-});
-
-function goNext(){
-  location.href="page3.html";
+function nextPage(){
+  window.location.href="page3.html";
 }
 </script>
 
 </body>
 </html>
+
 
