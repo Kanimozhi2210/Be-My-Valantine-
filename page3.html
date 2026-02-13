@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Special Puzzle 💖</title>
+<title>Quick Puzzle 💖</title>
 
 <style>
 body{
@@ -43,15 +43,23 @@ body{
 
 h2{
   color:#ffb3c6;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 /* gif */
 .gif-box img{
   width:140px;
-  margin:15px 0;
+  margin:15px 0 5px;
   border-radius:18px;
   box-shadow:0 0 20px rgba(255,120,160,0.8);
+}
+
+/* gif command text */
+.gif-text{
+  font-size:14px;
+  color:#ffd1dc;
+  min-height:20px;
+  margin-bottom:10px;
 }
 
 /* input */
@@ -77,8 +85,15 @@ button{
   cursor:pointer;
   box-shadow:0 0 15px rgba(255,80,130,0.8);
 }
-button:hover{
-  background:#ff2f66;
+button:hover{background:#ff2f66}
+
+.hidden{display:none}
+
+/* special gift */
+.gift-btn{
+  margin-top:15px;
+  background:linear-gradient(45deg,#ff4d88,#ff80bf);
+  font-size:16px;
 }
 </style>
 </head>
@@ -99,49 +114,65 @@ for(let i=0;i<30;i++){
 </script>
 
 <div class="card">
-  <h2>Solve the puzzle<br>to get a special gift 💝</h2>
+  <h2>Solve the puzzle 💕</h2>
 
   <div class="gif-box">
     <img id="gif" src="dudu2.gif">
   </div>
 
-  <div>What is 1+1=? 💕</div>
+  <div class="gif-text" id="gifText">Waiting for your answer 😊</div>
 
-  <input id="answer" placeholder="Type your answer...">
+  <div>What is <b>1 + 1</b> ?</div>
+
+  <input id="answer" placeholder="Type your answer">
 
   <br>
   <button onclick="checkAnswer()">Submit</button>
+
+  <button class="gift-btn hidden" id="giftBtn" onclick="goNext()">🎁 Special Gift</button>
 </div>
 
+<!-- sounds -->
+<audio id="ding" src="ding.mp3"></audio>
+
 <script>
-const input = document.getElementById("answer");
-const gif = document.getElementById("gif");
+const input=document.getElementById("answer");
+const gif=document.getElementById("gif");
+const text=document.getElementById("gifText");
+const giftBtn=document.getElementById("giftBtn");
+const ding=document.getElementById("ding");
 
 /* typing reactions */
-input.addEventListener("input", ()=>{
-  if(input.value.length === 0){
-    gif.src = "dudu2.gif";      // idle
+input.addEventListener("input",()=>{
+  if(input.value.length===0){
+    gif.src="dudu2.gif";
+    text.innerText="Waiting for your answer 😊";
   }
-  else if(input.value.length <= 2){
-    gif.src = "dudu3.gif";      // typing
+  else if(input.value.length===1){
+    gif.src="dudu3.gif";
+    text.innerText="Typing… ✍️";
   }
   else{
-    gif.src = "dudu4.gif";      // excited typing
+    gif.src="dudu4.gif";
+    text.innerText="Almost there 😳";
   }
 });
 
-/* check answer */
+/* submit */
 function checkAnswer(){
-  const ans = input.value.trim().toLowerCase();
-
-  if(ans === "love"){
-    gif.src = "dudu5.gif";      // correct / happy
-    setTimeout(()=>{
-      window.location.href = "page4.html"; // FINAL PAGE
-    },1500);
+  if(input.value.trim()==="2"){
+    gif.src="dudu5.gif";
+    text.innerText="Correct! 🎉";
+    ding.play();
+    giftBtn.classList.remove("hidden");
   }else{
-    gif.src = "dudu6.gif";      // ❌ wrong → thinking cute gif
+    gif.src="dudu6.gif";
+    text.innerText="Thinking… 🤔 Try again";
   }
+}
+
+function goNext(){
+  window.location.href="page4.html";
 }
 </script>
 
